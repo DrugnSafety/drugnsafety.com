@@ -248,7 +248,7 @@ code{font-family:var(--mono);font-size:.92em}
 .field svg{flex:none;color:var(--fg-3)}
 .field #chk-name{white-space:nowrap}
 .field code{margin-left:auto;font-size:12.5px;font-weight:400;color:var(--fg-3)}
-.chips-label{font-size:12.5px;color:var(--fg-3);margin:12px 0 6px}
+.chips-label{font-size:12.5px;color:var(--fg-2);margin:12px 0 6px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .chip{font:500 14px/1 var(--sans);padding:10px 13px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--fg-2);cursor:pointer;transition:border-color .2s,color .2s}
 .chip:hover{border-color:var(--fg-3);color:var(--fg)}
@@ -472,7 +472,7 @@ code{font-family:var(--mono);font-size:.92em}
     <a href="#company" lang="en" data-t="nav.company">Company</a>
   </nav>
   <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu"><i aria-hidden="true"></i><span lang="en" data-t="nav.menu">MENU</span></button>
-  <a class="lang" id="lang-switch" href="../" hreflang="ko" data-t="nav.lang" data-t-aria-label="nav.langlabel" aria-label="이 페이지를 한국어로 보기">한국어</a>
+  <a class="lang" id="lang-switch" href="../" hreflang="ko" lang="ko" data-t="nav.lang" data-t-aria-label="nav.langlabel" aria-label="이 페이지를 한국어로 보기">한국어</a>
   <a class="btn solid sm" href="#contact" data-t="nav.cta">Contact us</a>
 </div></header>
 
@@ -725,7 +725,7 @@ code{font-family:var(--mono);font-size:.92em}
   <div class="strength reveal">
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></svg>
-      <h3 data-t="s1.h">Built by a physician</h3><p data-t="s1.p">It started from a problem our founder, a board-certified allergist, met again and again in clinic. The guide generator now in development is also the founder's own work.</p>
+      <h3 data-t="s1.h">Led by a physician</h3><p data-t="s1.p">It started from a problem our founder, a board-certified allergist, met again and again in clinic. The guide generator now in development is also the founder's own work.</p>
     </div>
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V8M16 21v-10M21 21V4"/></svg>
@@ -1128,6 +1128,8 @@ code{font-family:var(--mono);font-size:.92em}
       var s = BASE + 'assets/' + m + (l === 'en' ? '-en' : '');
       v.pause(); v.setAttribute('poster', s + '-poster.jpg'); v.setAttribute('src', s + '.mp4'); v.load();
     });
+    var sw = document.getElementById('lang-switch'), other = l === 'en' ? 'ko' : 'en';
+    sw.setAttribute('lang', other); sw.setAttribute('hreflang', other);
     render();
     splitMission();
     try { localStorage.setItem('ds-lang', l); } catch (e) {}
