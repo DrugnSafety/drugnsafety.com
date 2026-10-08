@@ -243,7 +243,7 @@ code{font-family:var(--mono);font-size:.92em}
 .chk{container:chk / inline-size;width:100%;background:var(--bg-3);border:1px solid var(--line-2);border-radius:18px;padding:clamp(16px,2.3vw,24px);min-width:0;text-align:left}
 .chk-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
 .chk-title{font:700 15px/1.3 var(--sans)}
-.badge{font:500 11.5px/1 var(--mono);color:var(--fg-3);border:1px dashed var(--line-2);border-radius:999px;padding:6px 10px;white-space:nowrap}
+.badge{font:500 11.5px/1 var(--mono);color:var(--fg-2);border:1px dashed var(--line-2);border-radius:999px;padding:6px 10px;white-space:nowrap}
 .field{display:flex;flex-wrap:wrap;align-items:center;gap:10px;border:1px solid var(--line-2);background:var(--bg);border-radius:12px;padding:12px 14px;font-weight:700;font-size:17px;line-height:1.3}
 .field svg{flex:none;color:var(--fg-3)}
 .field #chk-name{white-space:nowrap}
@@ -303,6 +303,7 @@ code{font-family:var(--mono);font-size:.92em}
 .svc dl{margin:6px 0 0;border-top:1px solid var(--line)}
 .svc dl > div{display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.6}
 .svc dt{color:var(--fg-3)}
+.page[data-lang="en"] .svc dl > div{grid-template-columns:7.6em minmax(0,1fr)}
 .svc dd{color:var(--fg-2)}
 .svc .tlink{margin-top:6px;justify-self:start}
 .svc-next{margin-top:20px;border:1px dashed var(--line-2);border-radius:16px;padding:18px clamp(18px,2.4vw,28px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px}
@@ -463,14 +464,14 @@ code{font-family:var(--mono);font-size:.92em}
     <span>Drug<span class="amp">&amp;</span>Safety</span>
   </a>
   <nav class="nav" data-t-aria-label="nav.label" aria-label="On this page">
-    <a href="#technology" data-t="nav.tech">Technology</a>
-    <a href="#services" data-t="nav.services">Services</a>
-    <a href="#strength" data-t="nav.strength">Strengths</a>
-    <a href="#history" data-t="nav.history">History</a>
-    <a href="#evidence" data-t="nav.evidence">Evidence</a>
-    <a href="#company" data-t="nav.company">Company</a>
+    <a href="#technology" lang="en" data-t="nav.tech">Technology</a>
+    <a href="#services" lang="en" data-t="nav.services">Services</a>
+    <a href="#strength" lang="en" data-t="nav.strength">Strengths</a>
+    <a href="#history" lang="en" data-t="nav.history">History</a>
+    <a href="#evidence" lang="en" data-t="nav.evidence">Evidence</a>
+    <a href="#company" lang="en" data-t="nav.company">Company</a>
   </nav>
-  <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu"><i aria-hidden="true"></i><span data-t="nav.menu">MENU</span></button>
+  <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu"><i aria-hidden="true"></i><span lang="en" data-t="nav.menu">MENU</span></button>
   <a class="lang" id="lang-switch" href="../" hreflang="ko" data-t="nav.lang" data-t-aria-label="nav.langlabel" aria-label="이 페이지를 한국어로 보기">한국어</a>
   <a class="btn solid sm" href="#contact" data-t="nav.cta">Contact us</a>
 </div></header>
@@ -478,13 +479,13 @@ code{font-family:var(--mono);font-size:.92em}
 <div class="menu" id="menu" hidden>
   <button class="menu-close" type="button" id="menu-close" data-t="nav.menuclose">Close</button>
   <nav data-t-aria-label="nav.label" aria-label="On this page">
-    <a href="#mission" data-t="nav.mission">Mission</a>
-    <a href="#technology" data-t="nav.tech">Technology</a>
-    <a href="#services" data-t="nav.services">Services</a>
-    <a href="#strength" data-t="nav.strength">Strengths</a>
-    <a href="#history" data-t="nav.history">History</a>
-    <a href="#evidence" data-t="nav.evidence">Evidence</a>
-    <a href="#company" data-t="nav.company">Company</a>
+    <a href="#mission" lang="en" data-t="nav.mission">Mission</a>
+    <a href="#technology" lang="en" data-t="nav.tech">Technology</a>
+    <a href="#services" lang="en" data-t="nav.services">Services</a>
+    <a href="#strength" lang="en" data-t="nav.strength">Strengths</a>
+    <a href="#history" lang="en" data-t="nav.history">History</a>
+    <a href="#evidence" lang="en" data-t="nav.evidence">Evidence</a>
+    <a href="#company" lang="en" data-t="nav.company">Company</a>
   </nav>
   <a class="btn solid" href="#contact" data-t="nav.cta">Contact us</a>
 </div>
@@ -493,7 +494,7 @@ code{font-family:var(--mono);font-size:.92em}
 
 <section class="hero" id="top"><div class="wrap hero-in">
   <div class="hero-copy">
-    <p class="eyebrow" data-t="hero.eyebrow">Drug&amp;Safety by Rapport</p>
+    <p class="eyebrow" lang="en" data-t="hero.eyebrow">Drug&amp;Safety by Rapport</p>
     <h1 data-t="hero.h1"><span>A drug reaction</span> <span>should never</span> <span class="hl">happen twice.</span></h1>
     <p class="hero-sub" data-t="hero.sub">We turn the drug reaction record that stays in a hospital chart into one the patient carries and uses.</p>
     <div class="cta-row">
@@ -504,12 +505,12 @@ code{font-family:var(--mono);font-size:.92em}
   </div>
   <div class="signal" aria-hidden="true"><i class="s-no"></i><i class="s-care"></i><i class="s-ok"></i></div>
 </div>
-<a class="scroll" href="#mission" data-t="hero.scroll">SCROLL</a>
+<a class="scroll" href="#mission" lang="en" data-t="hero.scroll">SCROLL</a>
 </section>
 
 <section class="sec" id="mission"><div class="wrap">
-  <h2 class="eyebrow" data-t="sec.mission">Our Mission</h2>
-  <p class="mission-text" id="mission-text" data-t="mission.p">We move the record of a drug reaction out of one hospital's chart and into the patient's hands, and turn it into guidance any clinic or pharmacy can act on.</p>
+  <h2 class="eyebrow" lang="en" data-t="sec.mission">Our Mission</h2>
+  <p class="mission-text" id="mission-text" data-t="mission.p">We move the record of a drug reaction out of one hospital's chart and into the patient's hands, and turn it into guidance the next clinic or pharmacy can open and use.</p>
   <div class="prob reveal">
     <div class="prob-head">
       <p class="eyebrow" data-t="prob.kicker">Why it matters</p>
@@ -530,8 +531,8 @@ code{font-family:var(--mono);font-size:.92em}
 <section class="sec" id="technology"><div class="wrap">
   <div class="tech">
     <div class="tech-side">
-      <h2 class="sec-title" data-t="sec.tech">Our Technology</h2>
-      <p class="tech-brand">Drug&amp;Safety</p>
+      <h2 class="sec-title" lang="en" data-t="sec.tech">Our Technology</h2>
+      <p class="tech-brand" lang="en">Drug&amp;Safety</p>
       <p class="tech-brandsub" data-t="tech.brandsub">A personal drug safety service</p>
       <ol class="tech-list">
         <li><a href="#tech-1"><span class="n">01</span><span class="t" data-t="f1.tag">QR drug safety card</span><span class="d" data-t="t01.d">Clinician-confirmed contraindicated, caution and safe drugs, carried on one card and a QR code.</span></a></li>
@@ -550,7 +551,7 @@ code{font-family:var(--mono);font-size:.92em}
         <div class="stage">
           <div class="dcard">
             <div>
-              <div class="dc-eyebrow">DIGITAL DRUG SAFETY CARD</div>
+              <div class="dc-eyebrow" lang="en">DIGITAL DRUG SAFETY CARD</div>
               <div class="dc-name" data-t="card.name">Kim ○○</div>
               <div class="dc-demo" data-t="card.demo">Fictional demo data</div>
               <dl class="dc-facts">
@@ -647,7 +648,7 @@ code{font-family:var(--mono);font-size:.92em}
 
 <section class="sec" id="services"><div class="wrap">
   <div class="sec-head reveal">
-    <h2 class="sec-title" data-t="sec.services">Our Services</h2>
+    <h2 class="sec-title" lang="en" data-t="sec.services">Services from the Research</h2>
     <p class="sec-lead" data-t="sv.lead">Services built in research led by our founder.</p>
   </div>
   <div class="services reveal">
@@ -657,7 +658,7 @@ code{font-family:var(--mono);font-size:.92em}
       <p data-t="sv1.p">Search a drug by name against the allergy information your care team registered, or check a whole prescription by scanning its QR code.</p>
       <dl>
         <div><dt data-t="sv.m1k">Status</dt><dd data-t="sv1.m1v">Google Play rating 5.0 · 87 reviews · 1,000+ downloads (checked Oct 2026)</dd></div>
-        <div><dt data-t="sv.m2k">By</dt><dd data-t="sv1.m2v">Chungbuk National University Hospital with Chungbuk National University · MOHW patient safety research</dd></div>
+        <div><dt data-t="sv.m2k">Built and distributed by</dt><dd data-t="sv1.m2v">Chungbuk National University Hospital with Chungbuk National University · MOHW patient safety research</dd></div>
       </dl>
       <a class="tlink" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=en" data-href-ko="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=ko" data-href-en="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=en"><span data-t="sv1.a">View on Google Play</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </article>
@@ -667,7 +668,7 @@ code{font-family:var(--mono);font-size:.92em}
       <p data-t="sv2.p">A clinician registers the adverse reaction in a standard form, and the patient carries it as a card with a QR code. Another hospital or pharmacy scans the code to open the full record.</p>
       <dl>
         <div><dt data-t="sv.m1k">Status</dt><dd data-t="sv2.m1v">9 university hospitals · 709 patients enrolled (as of Dec 2024)</dd></div>
-        <div><dt data-t="sv.m2k">By</dt><dd data-t="sv2.m2v">MFDS R&amp;D · led by Chungbuk National University Hospital</dd></div>
+        <div><dt data-t="sv.m2k">Built and distributed by</dt><dd data-t="sv2.m2v">MFDS R&amp;D · led by Chungbuk National University Hospital</dd></div>
       </dl>
       <a class="tlink" target="_blank" rel="noopener" href="https://myadr.care"><span data-t="sv2.a">Open myadr.care</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </article>
@@ -677,7 +678,7 @@ code{font-family:var(--mono);font-size:.92em}
       <p data-t="sv3.p">The app where a patient receives the clinician-approved medication report and safety card. It also keeps reminders and a log, and sends what the patient experienced after taking a drug back to the research team.</p>
       <dl>
         <div><dt data-t="sv.m1k">Status</dt><dd data-t="sv3.m1v">108 reports delivered in field validation at 3 institutions · 100+ downloads on Google Play (checked Oct 2026)</dd></div>
-        <div><dt data-t="sv.m2k">By</dt><dd data-t="sv3.m2v">MOHW R&amp;D · distributed by Huray Positive</dd></div>
+        <div><dt data-t="sv.m2k">Built and distributed by</dt><dd data-t="sv3.m2v">MOHW R&amp;D · distributed by Huray Positive</dd></div>
       </dl>
       <a class="tlink" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.huray.cdss&amp;hl=en" data-href-ko="https://play.google.com/store/apps/details?id=com.huray.cdss&amp;hl=ko" data-href-en="https://play.google.com/store/apps/details?id=com.huray.cdss&amp;hl=en"><span data-t="sv3.a">View on Google Play</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </article>
@@ -687,7 +688,7 @@ code{font-family:var(--mono);font-size:.92em}
       <p data-t="sv4.p">Works from the health record a patient downloads and brings: it computes polypharmacy and drug allergy risks and drafts the patient guide for a clinician to review and approve.</p>
       <dl>
         <div><dt data-t="sv.m1k">Status</dt><dd data-t="sv4.m1v">Field validation at 3 institutions, completed Dec 2025 · 146 rules</dd></div>
-        <div><dt data-t="sv.m2k">By</dt><dd data-t="sv4.m2v">MOHW R&amp;D · led by Chungbuk National University Hospital</dd></div>
+        <div><dt data-t="sv.m2k">Built and distributed by</dt><dd data-t="sv4.m2v">MOHW R&amp;D · led by Chungbuk National University Hospital</dd></div>
       </dl>
     </article>
   </div>
@@ -718,17 +719,17 @@ code{font-family:var(--mono);font-size:.92em}
 
 <section class="sec" id="strength"><div class="wrap">
   <div class="sec-head reveal">
-    <h2 class="sec-title" data-t="sec.strength">Our Strengths</h2>
+    <h2 class="sec-title" lang="en" data-t="sec.strength">Our Strengths</h2>
     <p class="sec-lead" data-t="str.lead">Started in the clinic, grounded in research, built on standards.</p>
   </div>
   <div class="strength reveal">
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></svg>
-      <h3 data-t="s1.h">Clinical expertise</h3><p data-t="s1.p">Our founder, a board-certified allergist, started from a problem met again and again in clinic, and still takes part in the design.</p>
+      <h3 data-t="s1.h">Built by a physician</h3><p data-t="s1.p">It started from a problem our founder, a board-certified allergist, met again and again in clinic. The guide generator now in development is also the founder's own work.</p>
     </div>
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V8M16 21v-10M21 21V4"/></svg>
-      <h3 data-t="s2.h">Research foundation</h3><p data-t="s2.p">The service stands on research projects the founder has led as principal investigator at Chungbuk National University Hospital since 2017, with nine university hospitals taking part and field validation at three institutions.</p>
+      <h3 data-t="s2.h">Research since 2017</h3><p data-t="s2.p">The service builds on results from research projects the founder led as principal investigator, run by Chungbuk National University Hospital and its partner institutions. Nine university hospitals took part in the MFDS project, and the MOHW project was field-validated at three institutions.</p>
     </div>
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 2.6-2 3 1 .4 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 2.6 2 3-1 .4-2 1.5-2 3v2c0 2-1 3-3 3"/><path d="M10 12h4"/></svg>
@@ -736,14 +737,14 @@ code{font-family:var(--mono);font-size:.92em}
     </div>
     <div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.5 3.1 7.9 7.5 9.4 4.4-1.5 7.5-4.9 7.5-9.4V6L12 3z"/><path d="m8.8 12.1 2.3 2.3 4.2-4.6"/></svg>
-      <h3 data-t="s4.h">AI that stays inside the record</h3><p data-t="s4.p">Verdicts come from the registered record and the rule engine. The LLM turns the result into text a patient can read, and only a guide a clinician has reviewed and approved reaches the patient.</p>
+      <h3 data-t="s4.h">AI designed to stay inside the record</h3><p data-t="s4.p">Verdicts come from the registered record and the rule engine. The LLM turns the result into text a patient can read, and only a guide a clinician has reviewed and approved reaches the patient. It is designed not to guess beyond the record.</p>
     </div>
   </div>
 </div></section>
 
 <section class="sec" id="history"><div class="wrap">
   <div class="sec-head reveal">
-    <h2 class="sec-title" data-t="sec.history">History</h2>
+    <h2 class="sec-title" lang="en" data-t="sec.history">History</h2>
     <p class="sec-lead" data-t="rd.h2">The product stands on research<br>that began in 2017.</p>
     <p class="sec-note" data-t="rd.p">Drug&amp;Safety is building its service on the results of research the founder carried out at a university hospital. The projects below were run by Chungbuk National University Hospital and its partner institutions.</p>
   </div>
@@ -778,7 +779,7 @@ code{font-family:var(--mono);font-size:.92em}
 
 <section class="sec" id="evidence"><div class="wrap">
   <div class="sec-head reveal">
-    <h2 class="sec-title" data-t="sec.evidence">Evidence</h2>
+    <h2 class="sec-title" lang="en" data-t="sec.evidence">Evidence</h2>
     <p class="sec-lead" data-t="ev.h2">Numbers from the research,<br>words from users.</p>
   </div>
   <div class="reveal">
@@ -839,7 +840,7 @@ code{font-family:var(--mono);font-size:.92em}
 
 <section class="sec" id="company"><div class="wrap">
   <div class="sec-head reveal">
-    <h2 class="sec-title" data-t="sec.company">Company</h2>
+    <h2 class="sec-title" lang="en" data-t="sec.company">Company</h2>
     <p class="sec-lead" data-t="fo.h2">A faculty startup that began in the clinic</p>
   </div>
   <div class="founder reveal">
@@ -869,7 +870,7 @@ code{font-family:var(--mono);font-size:.92em}
 <section class="sec" id="faq"><div class="wrap">
   <div class="faq-grid">
     <div class="reveal">
-      <h2 class="sec-title" data-t="sec.faq">FAQ</h2>
+      <h2 class="sec-title" lang="en" data-t="sec.faq">FAQ</h2>
       <p class="sec-lead" data-t="faq.h2">What people ask</p>
     </div>
     <div class="faq reveal">
@@ -884,7 +885,7 @@ code{font-family:var(--mono);font-size:.92em}
 </div></section>
 
 <section class="sec contact" id="contact"><div class="wrap">
-  <p class="eyebrow" data-t="sec.contact">Contact</p>
+  <p class="eyebrow" lang="en" data-t="sec.contact">Contact</p>
   <h2 data-t="ct.h2">Want to try it at your<br>hospital or pharmacy?</h2>
   <p class="contact-p" data-t="ct.p">Write to us about adoption, joint research or partnership.</p>
   <div class="mail" id="mail">mingyukang@drugnsafety.com</div>
@@ -906,10 +907,10 @@ code{font-family:var(--mono);font-size:.92em}
       </a>
       <p class="foot-op" data-t="ft.op">Drug&amp;Safety is operated by Rapport.</p>
     </div>
-    <div><h3 class="fk" data-t="ft.loc.k">LOCATION</h3><p data-t="ft.loc.v">931, West Wing 9F, 776 1sunhwan-ro<br>Seowon-gu, Cheongju-si<br>Chungcheongbuk-do, Republic of Korea</p></div>
-    <div><h3 class="fk" data-t="ft.ct.k">CONTACT</h3><p><a href="mailto:mingyukang@drugnsafety.com">mingyukang@drugnsafety.com</a></p></div>
-    <div><h3 class="fk" data-t="ft.co.k">COMPANY</h3><p data-t="ft.co.v">Rapport<br>CEO Mingyu Kang<br>Founded November 2021</p></div>
-    <div><h3 class="fk" data-t="ft.ln.k">LINKS</h3>
+    <div><h3 class="fk" lang="en" data-t="ft.loc.k">LOCATION</h3><p data-t="ft.loc.v">931, West Wing 9F, 776 1sunhwan-ro<br>Seowon-gu, Cheongju-si<br>Chungcheongbuk-do, Republic of Korea</p></div>
+    <div><h3 class="fk" lang="en" data-t="ft.ct.k">CONTACT</h3><p><a href="mailto:mingyukang@drugnsafety.com">mingyukang@drugnsafety.com</a></p></div>
+    <div><h3 class="fk" lang="en" data-t="ft.co.k">COMPANY</h3><p data-t="ft.co.v">Rapport<br>CEO Mingyu Kang<br>Founded November 2021</p></div>
+    <div><h3 class="fk" lang="en" data-t="ft.ln.k">LINKS</h3>
       <div class="foot-links">
         <a target="_blank" rel="noopener" href="https://drugnsafety.github.io/homepage/en/" data-href-ko="https://drugnsafety.github.io/homepage/" data-href-en="https://drugnsafety.github.io/homepage/en/" data-t="ft.l1">Professor's homepage</a>
         <a target="_blank" rel="noopener" href="https://myadr.care" data-t="ft.l2">myadr.care</a>
@@ -1006,10 +1007,12 @@ code{font-family:var(--mono);font-size:.92em}
 
   /* menu on narrow screens */
   var menu = document.getElementById('menu'), menuBtn = document.getElementById('menu-btn');
+  var behind = [document.querySelector('.skip'), document.querySelector('.top'), document.getElementById('main'), document.querySelector('.foot')];
   function setMenu(open) {
     menu.hidden = !open;
     menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.documentElement.style.overflow = open ? 'hidden' : '';
+    behind.forEach(function (e) { e.inert = open; });
   }
   menuBtn.addEventListener('click', function () { setMenu(true); document.getElementById('menu-close').focus(); });
   document.getElementById('menu-close').addEventListener('click', function () { setMenu(false); menuBtn.focus(); });
