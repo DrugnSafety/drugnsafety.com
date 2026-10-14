@@ -859,7 +859,7 @@ html[lang="en"] .mg-vr > span{grid-column:2}
           </div>
         </div></div>
         <figcaption class="mg-ui">
-          <ol class="mg-cap"><li data-t="mg.c.cap1">진료에서 확인한 약물 부작용을 의료진이 표준 서식으로 등록합니다.</li><li data-t="mg.c.cap2">기록은 금기, 주의, 복용 가능 약이 담긴 카드와 QR 코드가 됩니다.</li><li data-t="mg.c.cap3">처음 가는 병원이나 약국에서 QR을 찍으면 상세 기록이 열립니다.</li><li data-t="mg.c.cap4">병원에 따라 플라스틱 카드, 앱, 카카오톡 알림톡으로 받고, 필요하면 FHIR 파일로도 전달합니다.</li></ol>
+          <ol class="mg-cap"><li data-t="mg.c.cap1">진료에서 확인한 약물 부작용을 의료진이 표준 서식으로 등록합니다.</li><li data-t="mg.c.cap2">기록은 금기, 주의, 복용 가능 약이 담긴 카드와 QR 코드가 됩니다.</li><li data-t="mg.c.cap3">처음 가는 병원이나 약국에서 QR을 찍으면 상세 기록이 열립니다.</li><li data-t="mg.c.cap4">병원에 따라 플라스틱 카드, 앱, 카카오톡 알림톡으로 받고, 필요하면 FHIR 파일로도 전달할 수 있습니다.</li></ol>
           <div class="mg-ctl">
             <button class="mg-btn" type="button" data-t-aria-label="mg.play" aria-label="재생" data-t-data-play="mg.play" data-play="재생" data-t-data-pause="mg.pause" data-pause="일시정지" data-t-data-replay="mg.replay" data-replay="다시 보기"><svg class="i mg-i-play" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i mg-i-pause" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg><svg class="i mg-i-replay" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"/></svg></button>
             <div class="mg-steps" role="group" data-t-aria-label="mg.steps" aria-label="장면 고르기"></div>
@@ -887,7 +887,7 @@ html[lang="en"] .mg-vr > span{grid-column:2}
       </div>
     </div>
     <div class="svc-vis">
-      <figure class="mg" id="mg-alimi" data-lens="0:1.25:222:160 3.4:1.15:256:150 7:1.2:330:150 9.2:1:240:180" role="group" data-t-aria-label="mg.a.aria" aria-label="약물알레르기 알리미로 약을 확인하는 과정, 세 장면" data-t-data-step="mg.step" data-step="장면" data-beats="0 3.4 7" data-len="11">
+      <figure class="mg" id="mg-alimi" data-lens="0:1.25:222:160 3.4:1.1:256:170 7:1.2:330:150 9.2:1:240:180" role="group" data-t-aria-label="mg.a.aria" aria-label="약물알레르기 알리미로 약을 확인하는 과정, 세 장면" data-t-data-step="mg.step" data-step="장면" data-beats="0 3.4 7" data-len="11">
         <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
           <svg class="mg-beams" viewBox="0 0 480 360" preserveAspectRatio="none" focusable="false">
             <path class="base" pathLength="1" d="M233 139 C 212 139, 212 124, 190 124" data-a="8.55:draw:.35"/>
@@ -1729,7 +1729,7 @@ html[lang="en"] .mg-vr > span{grid-column:2}
     document.addEventListener('visibilitychange', function () {
       films.forEach(function (f) {
         if (document.hidden) { if (f.state === 'playing') { f.pause(); f.away = true; } }
-        else if (f.away) { f.away = false; if (!f.user && f.ratio >= .4) f.play(); }
+        else if (f.away) { f.away = false; if (!f.user && !calm() && f.ratio >= .4) f.play(); }
       });
     });
     function rebuild(f) { /* same moment, new captions or a new camera */

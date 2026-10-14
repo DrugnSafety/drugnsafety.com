@@ -887,7 +887,7 @@ html[lang="en"] .mg-vr > span{grid-column:2}
       </div>
     </div>
     <div class="svc-vis">
-      <figure class="mg" id="mg-alimi" data-lens="0:1.25:222:160 3.4:1.15:256:150 7:1.2:330:150 9.2:1:240:180" role="group" data-t-aria-label="mg.a.aria" aria-label="How Drug Allergy Alert checks a medicine, in three scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 3.4 7" data-len="11">
+      <figure class="mg" id="mg-alimi" data-lens="0:1.25:222:160 3.4:1.1:256:170 7:1.2:330:150 9.2:1:240:180" role="group" data-t-aria-label="mg.a.aria" aria-label="How Drug Allergy Alert checks a medicine, in three scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 3.4 7" data-len="11">
         <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
           <svg class="mg-beams" viewBox="0 0 480 360" preserveAspectRatio="none" focusable="false">
             <path class="base" pathLength="1" d="M233 139 C 212 139, 212 124, 190 124" data-a="8.55:draw:.35"/>
@@ -1729,7 +1729,7 @@ html[lang="en"] .mg-vr > span{grid-column:2}
     document.addEventListener('visibilitychange', function () {
       films.forEach(function (f) {
         if (document.hidden) { if (f.state === 'playing') { f.pause(); f.away = true; } }
-        else if (f.away) { f.away = false; if (!f.user && f.ratio >= .4) f.play(); }
+        else if (f.away) { f.away = false; if (!f.user && !calm() && f.ratio >= .4) f.play(); }
       });
     });
     function rebuild(f) { /* same moment, new captions or a new camera */
