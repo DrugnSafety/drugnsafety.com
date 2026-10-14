@@ -302,7 +302,8 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
 .report .qa{margin-top:var(--sp-4);padding:var(--sp-4);border-radius:var(--r-1);background:var(--surface);font-size:var(--fs-6);line-height:1.6}
 .report .qa b{display:block;margin-bottom:4px}
 .report .qa span{display:block;color:var(--mute);margin-top:6px}
-.yak{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--sp-6);align-items:start;margin-top:var(--sp-7);padding:clamp(var(--sp-5),4vw,var(--sp-6));border-radius:var(--r-2);border:1px solid var(--line)}
+.yak{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-6);align-items:center;margin-top:var(--sp-7);padding:clamp(var(--sp-5),4vw,var(--sp-6));border-radius:var(--r-2);border:1px solid var(--line)}
+.yak-l{display:grid;gap:var(--sp-5);align-content:start;min-width:0}
 .yak-h{display:grid;gap:var(--sp-3);align-content:start}
 .yak-f{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4) var(--sp-5)}
 .yak-f li{display:grid;grid-template-columns:40px 1fr;gap:var(--sp-3);align-items:start}
@@ -313,7 +314,7 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
   .svc.flip .svc-text{order:0}
   .yak{grid-template-columns:minmax(0,1fr)}
 }
-@media (max-width:599px){.yak-f{grid-template-columns:minmax(0,1fr)}.meta{grid-template-columns:minmax(0,1fr);gap:2px}.meta dd{margin-bottom:var(--sp-2)}}
+@media (max-width:599px){.yak{padding:var(--sp-6) 0 0;border:0;border-top:1px solid var(--line);border-radius:0}.yak-f{grid-template-columns:minmax(0,1fr)}.meta{grid-template-columns:minmax(0,1fr);gap:2px}.meta dd{margin-bottom:var(--sp-2)}}
 
 /* safety */
 .safe .pipe{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--sp-3);margin:var(--sp-6) 0 var(--sp-7)}
@@ -442,7 +443,175 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
 .totop .i{width:22px;height:22px}
 .totop[data-show="false"]{opacity:0;transform:translateY(8px);pointer-events:none;visibility:hidden}
 
-/* motion: five moves, each 0.6 s or less, all off when the visitor asks for reduced motion */
+/* motion graphics: four short scenes in the services section. They are content, not interface motion: each plays once
+   when it is on screen, pauses off screen, has pause, replay and scene buttons, and shows its last frame when motion is
+   reduced or the script does not run. The canvas is 480 x 360 units and scales like a video; everything inside sizes in
+   units or em. Timing follows motion-craft: enter 0.55 s, exit 0.25 s, house easing, words 0.4 s at half overlap. */
+.mg{display:grid;gap:var(--sp-3);width:100%;max-width:600px;margin-inline:auto;min-width:0}
+.mg-canvas{position:relative;aspect-ratio:4/3;container-type:inline-size;overflow:hidden;border-radius:var(--r-2);border:1px solid var(--line);background:radial-gradient(80% 64% at 92% 0%,var(--go-tint),transparent 72%),var(--surface)}
+.mg-s{position:absolute;inset:0;transform-origin:0 0;--u:calc(100cqw / 480);font-size:calc(14 * var(--u));line-height:1.36;letter-spacing:-.012em;color:var(--ink)}
+.mg-s .o{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u))}
+.mg-s .o.h{height:calc(var(--h) * var(--u))}
+.mg-s .i{width:1.15em;height:1.15em;flex:none}
+.mg-s code{font-size:.84em;color:var(--mute)}
+.mg-x{opacity:0}
+.mg-p{background:var(--paper);border:1px solid var(--line);border-radius:.85em;box-shadow:var(--sh-1);padding:.8em .85em}
+.mg-hd{display:flex;align-items:center;gap:.4em;font-weight:760;font-size:.9em;line-height:1.3;margin-bottom:.6em}
+.mg-hd .i{color:var(--go)}
+.mg-hd .mg-end{margin-left:auto}
+.mg-k{font-size:.72em;font-weight:650;color:var(--mute);line-height:1.35}
+.mg-v{font-size:.82em;font-weight:720}
+.mg-sub{margin:.75em 0 .4em}
+.mg-fl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.42em .7em;align-items:center}
+html[lang="en"] .mg-fl{column-gap:.6em}
+.mg-fl1{display:grid;gap:.5em}
+.mg-fl1 > div{display:grid;gap:.08em}
+.mg-sk{display:block;height:.62em;border-radius:.31em;background:color-mix(in oklab,var(--paper),var(--ink) 15%);width:var(--sw,70%)}
+.mg-dot{display:inline-block;width:.62em;height:.62em;border-radius:50%;flex:none;background:var(--line-strong)}
+.mg-dot.no{background:var(--stop)}.mg-dot.care{background:var(--care)}.mg-dot.ok{background:var(--go)}
+.mg-tags,.mg-chips{display:flex;flex-wrap:wrap;gap:.35em}
+.mg-chips{margin-top:.35em}
+.mg-tag{display:inline-flex;align-items:center;gap:.38em;padding:.24em .62em;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:.74em;font-weight:650;white-space:nowrap;line-height:1.3}
+.mg-tag .i{width:1.15em;height:1.15em;color:var(--go)}
+.mg-vrs{display:grid;gap:.3em}
+.mg-vr{display:grid;grid-template-columns:auto 4.4em minmax(0,1fr);gap:.4em;align-items:baseline;padding:.4em .55em;border-radius:.45em;font-size:.76em;line-height:1.32}
+.mg-vr b{font-weight:780}
+.mg-vr.no{background:var(--stop-tint)}.mg-vr.care{background:var(--care-tint)}.mg-vr.ok{background:var(--go-tint)}
+html[lang="en"] .mg-vr{grid-template-columns:auto minmax(0,1fr);row-gap:0}
+html[lang="en"] .mg-vr > span{grid-column:2}
+.mg-vr.st{grid-template-columns:auto minmax(0,1fr);row-gap:.05em}
+.mg-vr.st > span{grid-column:2}
+.mg-ap{display:grid;gap:.15em;padding:.45em .55em;border-radius:.45em;background:var(--surface);border:1px solid var(--line);font-size:.72em;line-height:1.3}
+.mg-ap b{font-weight:780}
+.mg-ap span{color:var(--mute);font-weight:650}
+.mg-tabs{display:flex;justify-content:space-around;padding:.55em .4em .6em;border-top:1px solid var(--line);background:var(--paper)}
+.mg-tabs .i{color:var(--mute)}
+.mg-s .mg-done .i,.mg-s .mg-tick .i{color:var(--paper)}
+.mg-pill{display:inline-flex;align-items:center;gap:.36em;padding:.2em .58em;border-radius:999px;font-size:.74em;font-weight:760;white-space:nowrap;line-height:1.3}
+.mg-pill.no{background:var(--stop-tint)}.mg-pill.care{background:var(--care-tint)}.mg-pill.ok{background:var(--go-tint)}
+.mg-card{background:var(--paper);border:1px solid var(--line);border-radius:1em;box-shadow:var(--sh-2);padding:.9em;transform:rotate(-1.6deg)}
+.mg-id{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6em;align-items:start;margin:.35em 0 .7em}
+.mg-name{font-size:1.32em;font-weight:780;letter-spacing:-.02em;line-height:1.2}
+.mg-qr{position:relative;width:3.9em;height:3.9em}
+.mg-qr img{width:100%;height:100%;border-radius:.3em;image-rendering:pixelated}
+.mg-frame{position:absolute;inset:-.42em;--c:var(--go);background:linear-gradient(var(--c),var(--c)) 0 0/1em .17em no-repeat,linear-gradient(var(--c),var(--c)) 0 0/.17em 1em no-repeat,linear-gradient(var(--c),var(--c)) 100% 0/1em .17em no-repeat,linear-gradient(var(--c),var(--c)) 100% 0/.17em 1em no-repeat,linear-gradient(var(--c),var(--c)) 0 100%/1em .17em no-repeat,linear-gradient(var(--c),var(--c)) 0 100%/.17em 1em no-repeat,linear-gradient(var(--c),var(--c)) 100% 100%/1em .17em no-repeat,linear-gradient(var(--c),var(--c)) 100% 100%/.17em 1em no-repeat}
+.mg-sbox{position:absolute;inset:0;overflow:hidden;border-radius:.3em;pointer-events:none}
+.mg-scan{position:absolute;inset:0;opacity:0}
+.mg-scan::after{content:"";position:absolute;left:0;right:0;top:0;height:.16em;background:var(--go);box-shadow:0 0 .7em .15em color-mix(in oklab,var(--go) 55%,transparent)}
+.mg-scan.x::after{right:auto;bottom:0;width:.16em;height:auto}
+.mg-phone{display:flex;flex-direction:column;height:100%;background:var(--paper);border:.16em solid color-mix(in oklab,var(--paper),var(--ink) 72%);border-radius:1.5em;box-shadow:var(--sh-2);padding:.36em}
+.mg-scr{position:relative;flex:1;display:flex;flex-direction:column;border-radius:1.14em;overflow:hidden;background:var(--paper);border:1px solid var(--line)}
+.mg-app{display:flex;align-items:center;gap:.35em;padding:.6em .7em .55em;font-size:.72em;font-weight:760;border-bottom:1px solid var(--line);background:var(--paper);white-space:nowrap}
+.mg-app .i{color:var(--go)}
+.mg-mono{font-family:var(--mono);font-weight:500;color:var(--mute)}
+.mg-scrs{position:relative;flex:1;overflow:hidden}
+.mg-scrn{position:absolute;inset:0;padding:.65em .7em;display:grid;align-content:start;gap:.5em;background:var(--paper)}
+.mg-scrn .mg-hd{font-size:.8em;margin-bottom:.1em}
+.mg-real{position:absolute;inset:0;background:#8B8B8B}
+.mg-real img{width:100%;height:auto}
+.mg-badge{position:absolute;left:.5em;bottom:.5em;padding:.2em .5em;border-radius:999px;background:var(--ink);color:var(--paper);font-size:.64em;font-weight:700;white-space:nowrap}
+.mg-cam{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:.8em;background:color-mix(in oklab,var(--ink) 92%,var(--paper));color:var(--paper)}
+.mg-cam .mg-k{color:color-mix(in oklab,var(--paper) 82%,var(--ink))}
+.mg-camf{position:relative;width:6.2em;height:3.4em}
+.mg-legend{display:grid;gap:.55em}
+.mg-lrow{display:flex;align-items:center;gap:.55em;font-weight:760}
+.mg-lamp{width:1.25em;height:1.25em;border-radius:50%;flex:none}
+.mg-lamp.no{background:var(--stop)}.mg-lamp.care{background:var(--care)}.mg-lamp.ok{background:var(--go)}
+.mg-search{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.4em;align-items:center;padding:.45em;border-radius:.8em;background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.mg-sel{font-size:.72em;font-weight:650;color:var(--mute);padding:.35em .5em;border-radius:.45em;background:var(--surface);white-space:nowrap}
+.mg-in{display:flex;align-items:center;gap:.35em;min-width:0;font-weight:720;font-size:.86em;padding:.3em .4em;border-bottom:.12em solid var(--go)}
+.mg-in .i{color:var(--mute)}
+.mg-in span{white-space:nowrap;overflow:hidden}
+.mg-go{font-size:.74em;font-weight:760;padding:.4em .7em;border-radius:.5em;background:var(--ink);color:var(--paper)}
+.mg-say{display:grid;gap:.5em;justify-items:start}
+.mg-say p{font-size:.8em;font-weight:620;line-height:1.45}
+.mg-rx{display:grid;gap:.45em}
+.mg-rxl{display:grid;grid-template-columns:1.3em minmax(0,1fr) auto;gap:.35em;align-items:center;padding:.38em 0;border-bottom:1px dashed var(--line);font-size:.84em;font-weight:680}
+.mg-rxl > i{font-style:normal;color:var(--mute);font-weight:600}
+.mg-pdf{position:relative;height:2.7em;margin-top:.3em;--k:#0F1D17;background-color:#FFFFFF;box-shadow:0 0 0 .3em #FFFFFF;border-radius:.1em;background-image:repeating-linear-gradient(90deg,var(--k) 0 .12em,transparent .12em .27em,var(--k) .27em .45em,transparent .45em .53em,var(--k) .53em .59em,transparent .59em .8em),repeating-linear-gradient(90deg,var(--k) 0 .2em,transparent .2em .28em,var(--k) .28em .34em,transparent .34em .57em,var(--k) .57em .73em,transparent .73em .85em),repeating-linear-gradient(90deg,transparent 0 .1em,var(--k) .1em .22em,transparent .22em .39em,var(--k) .39em .5em,transparent .5em .62em,var(--k) .62em .83em),repeating-linear-gradient(90deg,var(--k) 0 .16em,transparent .16em .3em,var(--k) .3em .41em,transparent .41em .58em,var(--k) .58em .66em,transparent .66em .79em);background-position:0 0,0 33.3%,0 66.6%,0 100%;background-size:100% 25%;background-repeat:no-repeat}
+.mg-node{display:grid;gap:.3em;justify-items:start}
+.mg-box{display:flex;align-items:center;gap:.4em;padding:.45em .6em;border-radius:.6em;background:var(--paper);border:1px solid var(--line);font-size:.74em;font-weight:680;line-height:1.3;box-shadow:var(--sh-1)}
+.mg-box .i{color:var(--go)}
+.mg-ck{display:grid;gap:.62em}
+.mg-ckr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.22em .5em;align-items:center}
+.mg-ckr > span{font-size:.74em;font-weight:680;line-height:1.3}
+.mg-track{grid-column:1;height:.36em;border-radius:.18em;background:color-mix(in oklab,var(--paper),var(--ink) 12%);overflow:hidden}
+.mg-track b{display:block;height:100%;background:var(--go);transform-origin:left center}
+.mg-tick{grid-column:2;grid-row:1 / span 2;display:grid;place-items:center;width:1.3em;height:1.3em;border-radius:50%;background:var(--go);color:var(--paper)}
+.mg-tick .i{width:.8em;height:.8em}
+.mg-count{grid-column:1;font-size:.68em;font-weight:700;color:var(--mute);font-variant-numeric:tabular-nums}
+.mg-flag{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.2em .45em;align-items:center;padding:.6em .7em;border-radius:.7em;background:var(--care-tint);border:1px solid color-mix(in oklab,var(--care) 35%,var(--paper))}
+.mg-flag .i{color:var(--ink)}
+.mg-flag b{font-size:.78em;font-weight:760}
+.mg-flag span{grid-column:2;font-size:.7em;font-weight:620}
+.mg-lines{display:grid;gap:.42em}
+.mg-hi{padding:.28em .45em;border-radius:.35em;background:var(--care-tint);font-size:.68em;font-weight:700;line-height:1.3}
+.mg-ai{display:inline-flex;align-items:center;gap:.3em;padding:.16em .5em;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.64em;font-weight:700;color:var(--mute);white-space:nowrap}
+.mg-ai .i{color:var(--go);width:1.1em;height:1.1em}
+.mg-stamp{display:inline-flex;align-items:center;gap:.35em;padding:.38em .7em;border-radius:.5em;border:.15em solid var(--go);color:var(--ink);background:color-mix(in oklab,var(--paper) 90%,transparent);font-size:.8em;font-weight:780;white-space:nowrap;transform:rotate(-5deg);box-shadow:var(--sh-1)}
+.mg-stamp .i{color:var(--go)}
+.mg-done{display:inline-grid;place-items:center;width:1.25em;height:1.25em;border-radius:50%;background:var(--go);color:var(--paper);margin-left:auto}
+.mg-done .i{width:.78em;height:.78em}
+.mg-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.2em}
+.mg-day{display:grid;justify-items:center;gap:.22em;font-size:.62em;font-weight:650;color:var(--mute)}
+.mg-day > i{position:relative;display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;border:1px solid var(--line);background:var(--paper)}
+.mg-day > i b{position:absolute;inset:-1px;display:grid;place-items:center;border-radius:50%;background:var(--go);color:var(--paper)}
+.mg-day > i b .i{width:1em;height:1em}
+.mg-day.today > i{border-color:var(--ink)}
+.mg-li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.45em;align-items:center;padding:.42em .5em;border-radius:.55em;background:var(--surface);font-size:.7em;font-weight:680}
+.mg-li .i{color:var(--go)}
+.mg-btnx{justify-self:start;padding:.42em .7em;border-radius:.55em;background:var(--ink);color:var(--paper);font-size:.68em;font-weight:760;white-space:nowrap}
+.mg-drug{display:grid;gap:.05em;padding:.4em .5em;border-radius:.5em;background:var(--surface)}
+.mg-drug b{font-size:.74em;font-weight:760}
+.mg-drug span{font-size:.64em;color:var(--mute);font-weight:620}
+.mg-tb{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.5em .7em;align-items:center;font-size:.74em}
+.mg-tbv{display:grid;line-height:1.3}
+.mg-tbv b{font-weight:740}
+.mg-tbv span{font-size:.9em;color:var(--mute);font-weight:620}
+.mg-tb .th{font-size:.9em;font-weight:700;color:var(--mute)}
+.mg-tb .mg-pill{font-size:.92em}
+.mg-field{display:grid;gap:.15em}
+.mg-sl{position:relative;width:8.4em;height:.5em;margin:.45em 0 .2em;border-radius:.25em;background:color-mix(in oklab,var(--paper),var(--ink) 12%)}
+.mg-sl b{position:absolute;left:0;top:0;bottom:0;width:30%;border-radius:inherit;background:var(--care);transform-origin:left center}
+.mg-sl i{position:absolute;top:50%;left:30%;width:1.2em;height:1.2em;margin:-.6em 0 0 -.6em;border-radius:50%;background:var(--paper);border:.16em solid var(--care);box-shadow:var(--sh-1)}
+.mg-num{font-weight:780;font-variant-numeric:tabular-nums}
+.mg-row{display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+.mg-node .mg-row.mg-wrap{flex-wrap:wrap;row-gap:.25em}
+.mg-ask{margin-top:.7em;color:var(--ink);font-weight:680}
+.mg-node .mg-row{flex-wrap:nowrap;gap:.35em}
+.mg-beams{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.mg-beams path{fill:none;stroke-linecap:round}
+.mg-beams .base{stroke:color-mix(in oklab,var(--go) 55%,var(--paper));stroke-width:1.6;stroke-dasharray:1 2}
+.mg-beams .pulse{stroke:var(--go);stroke-width:2.6;stroke-dasharray:.24 1.3;stroke-dashoffset:-1.06}
+/* the bar under each scene: caption, play or pause, scene buttons */
+.mg-ui{display:grid;gap:var(--sp-2)}
+.mg-cap{font-size:var(--fs-6);line-height:1.55;font-weight:650}
+.mg:not(.mg-on) .mg-cap,.mg-on.mg-list .mg-cap{list-style:decimal;padding-left:1.25em;display:grid;gap:2px;font-weight:500}
+.mg-on .mg-cap{display:grid;min-height:3.1em}
+.mg-on:not(.mg-list) .mg-cap > li{grid-area:1 / 1}
+/* reduced motion: the whole story as a list, the shown part in full colour */
+.mg-on.mg-list .mg-cap{min-height:0}
+.mg-on.mg-list .mg-cap > li{color:var(--mute);opacity:1!important}
+.mg-on.mg-list .mg-cap > li.on{color:var(--ink);font-weight:650}
+.mg-on.mg-list .mg-cap .w{opacity:1!important;transform:none!important}
+.mg-cap .w{display:inline-block}
+.mg-ctl{display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-2) var(--sp-3)}
+.mg:not(.mg-on) .mg-btn,.mg:not(.mg-on) .mg-steps{display:none}
+.mg-btn{flex:none;display:inline-grid;place-items:center;width:40px;height:40px;padding:0;border-radius:50%;border:1.5px solid var(--line-strong);background:var(--paper);color:var(--ink)}
+.mg-btn:hover{border-color:var(--ink)}
+.mg-btn .i{grid-area:1 / 1;width:16px;height:16px}
+.mg-btn .mg-i-pause,.mg-btn .mg-i-replay,.mg-btn[data-state="playing"] .mg-i-play,.mg-btn[data-state="ended"] .mg-i-play{display:none}
+.mg-btn[data-state="playing"] .mg-i-pause,.mg-btn[data-state="ended"] .mg-i-replay{display:block}
+.mg-steps{flex:1 1 9rem;display:flex;gap:6px;min-width:0}
+.mg-step{position:relative;flex:var(--g,1) 1 0;min-width:24px;height:28px;padding:0;border:0;background:none;border-radius:4px}
+.mg-step::before,.mg-step > i{content:"";position:absolute;left:0;right:0;top:12px;height:4px;border-radius:2px}
+.mg-step::before{background:var(--line-strong)}
+.mg-step > i{background:var(--go);transform-origin:left center;transform:scaleX(0)}
+.mg-note{flex:1 0 100%;font-size:var(--fs-6);color:var(--mute)}
+@media (min-width:600px){.mg-note{flex:0 1 auto;margin-left:auto;text-align:right}}
+
+/* motion: five moves, each 0.6 s or less, all off when the visitor asks for reduced motion.
+   The four motion graphics above are content with their own controls and are not part of these five. */
 @media (prefers-reduced-motion:no-preference){
   /* M1 the card's three lamps light in turn on load */
   .dcard .vrow .dot{animation:lamp .2s ease-out both}
@@ -621,16 +790,83 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
       </div>
     </div>
     <div class="svc-vis">
-      <div class="doc">
-        <p class="doc-h"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm0,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48ZM200,40H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-64,72V144a8,8,0,0,1,16,0v32a8,8,0,0,1-16,0Zm80-16a8,8,0,0,1-8,8H184v40a8,8,0,0,1-8,8H144a8,8,0,0,1,0-16h24V144a8,8,0,0,1,16,0v8h24A8,8,0,0,1,216,160Zm0,32v16a8,8,0,0,1-16,0V192a8,8,0,0,1,16,0Z"/></svg><span data-t="rec.h">What the QR code opens</span></p>
-        <div class="blocks">
-          <div class="blk"><b data-t="rec.b1">Reaction</b><div class="tags"><span class="tag" data-t="rec.b1.1">Onset date</span><span class="tag" data-t="rec.b1.2">Culprit drug</span><span class="tag" data-t="rec.b1.3">Symptoms</span><span class="tag" data-t="rec.b1.4">Severity</span><span class="tag" data-t="rec.b1.5">Causality</span></div></div>
-          <div class="blk"><b data-t="rec.b2">Specialist reconciliation</b><div class="tags"><span class="tag" data-t="rec.b2.1">Contraindicated groups</span><span class="tag" data-t="rec.b2.2">Caution groups</span><span class="tag" data-t="rec.b2.3">OK-to-take groups</span><span class="tag" data-t="rec.b2.4">Confirmatory tests</span></div></div>
-          <div class="blk"><b data-t="rec.b3">Document</b><div class="tags"><span class="tag" data-t="rec.b3.1">Hospital</span><span class="tag" data-t="rec.b3.2">Assessor</span></div></div>
-        </div>
-        <p class="small" style="margin-top:var(--sp-4)" data-t="rec.ways">Ways to receive it</p>
-        <div class="ways"><span class="tag" data-t="rec.w1">Plastic card</span><span class="tag" data-t="rec.w2">App</span><span class="tag" data-t="rec.w3">KakaoTalk message</span><span class="tag" data-t="rec.w4">FHIR file</span></div>
-      </div>
+      <figure class="mg" id="mg-card" data-lens="0:1.35:240:162 3:1.4:156:150 6.2:1.35:330:150 9.4:1:240:180" role="group" data-t-aria-label="mg.c.aria" aria-label="How the digital drug safety card is made and used, in four scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 3 6.2 9.4" data-len="11.6">
+        <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
+          <svg class="mg-beams" viewBox="0 0 480 360" preserveAspectRatio="none" focusable="false">
+            <path class="base" pathLength="1" d="M276 96 C 298 96, 302 150, 326 150" data-a="7.25:draw:.4"/>
+            <path class="pulse" pathLength="1" d="M276 96 C 298 96, 302 150, 326 150" data-a="7.35:beam:.75"/>
+          </svg>
+          <div class="o mg-x" style="--x:112;--y:34;--w:256" data-a="0.05:rise 3:out:.3">
+            <div class="mg-p">
+              <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M220,160a12,12,0,1,1-12-12A12,12,0,0,1,220,160Zm-4.55,39.29A48.08,48.08,0,0,1,168,240H144a48.05,48.05,0,0,1-48-48V151.49A64,64,0,0,1,40,88V40a8,8,0,0,1,8-8H72a8,8,0,0,1,0,16H56V88a48,48,0,0,0,48.64,48c26.11-.34,47.36-22.25,47.36-48.83V48H136a8,8,0,0,1,0-16h24a8,8,0,0,1,8,8V87.17c0,32.84-24.53,60.29-56,64.31V192a32,32,0,0,0,32,32h24a32.06,32.06,0,0,0,31.22-25,40,40,0,1,1,16.23.27ZM232,160a24,24,0,1,0-24,24A24,24,0,0,0,232,160Z"/></svg><span data-t="mg.c.form">Reaction record</span><span class="mg-tag mg-end">FHIR</span></p>
+              <dl class="mg-fl">
+                <dt class="mg-k" data-t="rec.b1.2">Culprit drug</dt><dd class="mg-v" data-a="0.45:wipe"><span data-t="mg.c.drug">Amoxicillin</span> <code>J01CA04</code></dd>
+                <dt class="mg-k" data-t="rec.b1.3">Symptoms</dt><dd class="mg-v" data-a="0.67:wipe"><span data-t="mg.c.sym">Anaphylaxis</span></dd>
+                <dt class="mg-k" data-t="rec.b1.4">Severity</dt><dd class="mg-v" data-a="0.89:wipe"><span data-t="mg.c.sev">Severe</span></dd>
+                <dt class="mg-k" data-t="rec.b1.5">Causality</dt><dd data-a="1.11:wipe"><i class="mg-sk" style="--sw:62%"></i></dd>
+                <dt class="mg-k" data-t="rec.b1.1">Onset date</dt><dd data-a="1.33:wipe"><i class="mg-sk" style="--sw:44%"></i></dd>
+              </dl>
+              <p class="mg-k mg-sub" data-t="rec.b2">Specialist reconciliation</p>
+              <div class="mg-tags">
+                <span class="mg-tag" data-a="1.85:pop"><i class="mg-dot no" data-a="1.95:lamp"></i><span data-t="rec.b2.1">Contraindicated groups</span></span>
+                <span class="mg-tag" data-a="2:pop"><i class="mg-dot care" data-a="2.1:lamp"></i><span data-t="rec.b2.2">Caution groups</span></span>
+                <span class="mg-tag" data-a="2.15:pop"><i class="mg-dot ok" data-a="2.25:lamp"></i><span data-t="rec.b2.3">OK-to-take groups</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="o" style="--x:30;--y:26;--w:256" data-a="3.05:pop:.55">
+            <div class="mg-card">
+              <p class="mg-k" data-t="card.label">Digital drug safety card</p>
+              <div class="mg-id">
+                <div><p class="mg-name" data-t="card.name">Kim ○○</p><p class="mg-k" data-t="mg.c.sub">Amoxicillin · anaphylaxis</p></div>
+                <div class="mg-qr">
+                  <div data-a="4.05:wipeY:.6"><img src="../assets/qr.png" width="360" height="360" alt="" loading="lazy"></div>
+                  <span class="mg-frame" data-a="6.7:pop:.3"></span>
+                  <span class="mg-sbox"><span class="mg-scan" data-a="6.85:scanY:.75"></span></span>
+                </div>
+              </div>
+              <div class="mg-vrs">
+                <p class="mg-vr no" data-a="3.4:wipe"><i class="mg-dot no" data-a="3.6:lamp"></i><b data-t="v.no">Contraindicated</b><span data-t="mg.c.no">Amoxicillin, amoxicillin with clavulanic acid</span></p>
+                <p class="mg-vr care" data-a="3.55:wipe"><i class="mg-dot care" data-a="3.75:lamp"></i><b data-t="v.care">Caution</b><span data-t="mg.c.care">Penicillins, cephalosporins</span></p>
+                <p class="mg-vr ok" data-a="3.7:wipe"><i class="mg-dot ok" data-a="3.9:lamp"></i><b data-t="v.ok">OK to take</b><span data-t="mg.c.ok">3rd- and 4th-generation cephalosporins</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="o h" style="--x:318;--y:18;--w:136;--h:278" data-a="6.25:fromR">
+            <div class="mg-phone"><div class="mg-scr">
+              <p class="mg-app mg-mono">myadr.care</p>
+              <div class="mg-scrs"><div class="mg-scrn">
+                <p class="mg-hd" data-a="7.6:fade"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.c.rec">Full record</span></p>
+                <dl class="mg-fl1">
+                  <div data-a="7.8:drop"><dt class="mg-k" data-t="rec.b1.2">Culprit drug</dt><dd class="mg-v" data-t="mg.c.drug">Amoxicillin</dd></div>
+                  <div data-a="7.95:drop"><dt class="mg-k" data-t="rec.b1.3">Symptoms</dt><dd class="mg-v" data-t="mg.c.sym">Anaphylaxis</dd></div>
+                  <div data-a="8.1:drop"><dt class="mg-k" data-t="rec.b1.4">Severity</dt><dd class="mg-v" data-t="mg.c.sev">Severe</dd></div>
+                  <div data-a="8.25:drop"><dt class="mg-k" data-t="rec.b1.5">Causality</dt><dd><i class="mg-sk" style="--sw:70%"></i></dd></div>
+                  <div data-a="8.4:drop"><dt class="mg-k" data-t="rec.b1.1">Onset date</dt><dd><i class="mg-sk" style="--sw:52%"></i></dd></div>
+                  <div data-a="8.55:drop"><dt class="mg-k" data-t="rec.b2.4">Confirmatory tests</dt><dd><i class="mg-sk" style="--sw:60%"></i></dd></div>
+                </dl>
+              </div></div>
+            </div></div>
+          </div>
+          <div class="o" style="--x:30;--y:300;--w:430">
+            <p class="mg-k" data-a="9.5:fade" data-t="rec.ways">Ways to receive it</p>
+            <div class="mg-chips">
+              <span class="mg-tag" data-a="9.65:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm0,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48ZM200,40H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-64,72V144a8,8,0,0,1,16,0v32a8,8,0,0,1-16,0Zm80-16a8,8,0,0,1-8,8H184v40a8,8,0,0,1-8,8H144a8,8,0,0,1,0-16h24V144a8,8,0,0,1,16,0v8h24A8,8,0,0,1,216,160Zm0,32v16a8,8,0,0,1-16,0V192a8,8,0,0,1,16,0Z"/></svg><span data-t="rec.w1">Plastic card</span></span>
+              <span class="mg-tag" data-a="9.8:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></svg><span data-t="rec.w2">App</span></span>
+              <span class="mg-tag" data-a="9.95:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M168,112a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,112Zm-8,24H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm72-8A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"/></svg><span data-t="rec.w3">KakaoTalk message</span></span>
+              <span class="mg-tag" data-a="10.1:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="rec.w4">FHIR file</span></span>
+            </div>
+          </div>
+        </div></div>
+        <figcaption class="mg-ui">
+          <ol class="mg-cap"><li data-t="mg.c.cap1">A clinician enters the confirmed reaction in a standard format.</li><li data-t="mg.c.cap2">The record becomes a card that lists contraindicated, caution and OK-to-take drugs, with a QR code.</li><li data-t="mg.c.cap3">At a new hospital or pharmacy, scanning the QR opens the full record.</li><li data-t="mg.c.cap4">Depending on the hospital, it comes as a plastic card, in an app or by KakaoTalk message, and can be passed on as a FHIR file when needed.</li></ol>
+          <div class="mg-ctl">
+            <button class="mg-btn" type="button" data-t-aria-label="mg.play" aria-label="Play" data-t-data-play="mg.play" data-play="Play" data-t-data-pause="mg.pause" data-pause="Pause" data-t-data-replay="mg.replay" data-replay="Replay"><svg class="i mg-i-play" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i mg-i-pause" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg><svg class="i mg-i-replay" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"/></svg></button>
+            <div class="mg-steps" role="group" data-t-aria-label="mg.steps" aria-label="Choose a scene"></div>
+            <p class="mg-note" data-t="mg.demo">Illustration with a fictional patient</p>
+          </div>
+        </figcaption>
+      </figure>
     </div>
   </article>
 
@@ -650,10 +886,78 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
         <a class="tlink" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=en" data-href-ko="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=ko" data-href-en="https://play.google.com/store/apps/details?id=kr.ac.cbnuh.dur&amp;hl=en"><span data-t="s2.a">View on Google Play</span><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></svg></a>
       </div>
     </div>
-    <figure class="svc-vis">
-      <div class="phone"><img src="../assets/app-card-screen.jpg" width="447" height="670" loading="lazy" data-t-alt="s2.alt" alt="Real Drug Allergy Alert screen. The drug safety card lists the reaction and the contraindicated, caution and OK-to-take drugs, with an Action Plan button."></div>
-      <figcaption class="figcap" data-t="s2.cap">Real app screen with a demo record (2018)</figcaption>
-    </figure>
+    <div class="svc-vis">
+      <figure class="mg" id="mg-alimi" data-lens="0:1.25:222:160 3.4:1.15:256:150 7:1.2:330:150 9.2:1:240:180" role="group" data-t-aria-label="mg.a.aria" aria-label="How Drug Allergy Alert checks a medicine, in three scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 3.4 7" data-len="11">
+        <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
+          <svg class="mg-beams" viewBox="0 0 480 360" preserveAspectRatio="none" focusable="false">
+            <path class="base" pathLength="1" d="M233 139 C 212 139, 212 124, 190 124" data-a="8.55:draw:.35"/>
+            <path class="pulse" pathLength="1" d="M233 139 C 212 139, 212 124, 190 124" data-a="8.65:beam:.7"/>
+          </svg>
+          <div class="o h" style="--x:30;--y:16;--w:160;--h:328" data-a="0.05:rise">
+            <div class="mg-phone"><div class="mg-scr">
+              <p class="mg-app"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216.42,39.6a53.26,53.26,0,0,0-75.32,0L39.6,141.09a53.26,53.26,0,0,0,75.32,75.31h0L216.43,114.91A53.31,53.31,0,0,0,216.42,39.6ZM103.61,205.09h0a37.26,37.26,0,0,1-52.7-52.69L96,107.31,148.7,160ZM205.11,103.6,160,148.69,107.32,96l45.1-45.09a37.26,37.26,0,0,1,52.69,52.69ZM189.68,82.34a8,8,0,0,1,0,11.32l-24,24a8,8,0,1,1-11.31-11.32l24-24A8,8,0,0,1,189.68,82.34Z"/></svg><span data-t="mg.a.app">Drug Allergy Alert</span></p>
+              <div class="mg-scrs">
+                <div class="mg-real" data-a="4.7:swapIn"><img src="../assets/app-ibu-all.jpg" width="465" height="411" alt="" loading="lazy"><span class="mg-badge" data-t="mg.a.real">Real screen (2018)</span></div>
+                <div class="mg-scrn mg-x" data-a="0.25:fade 4.7:swapOut">
+                  <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg><span data-t="mg.a.card">Drug safety card</span></p>
+                  <div><p class="mg-k" data-t="mg.a.who">Fictional patient A</p><p class="mg-v" data-t="mg.a.rec">Cross-reacts with all NSAIDs</p></div>
+                  <div class="mg-vrs">
+                    <p class="mg-vr st no" data-a="0.6:wipe"><i class="mg-dot no" data-a="0.8:lamp"></i><b data-t="v.no">Contraindicated</b><span data-t="mg.a.no">NSAIDs</span></p>
+                    <p class="mg-vr st care" data-a="0.75:wipe"><i class="mg-dot care" data-a="0.95:lamp"></i><b data-t="v.care">Caution</b><span data-t="mg.a.care">Acetaminophen</span></p>
+                    <p class="mg-vr st ok" data-a="0.9:wipe"><i class="mg-dot ok" data-a="1.1:lamp"></i><b data-t="v.ok">OK to take</b><span data-t="mg.a.ok">Celecoxib</span></p>
+                  </div>
+                  <p class="mg-ap" data-a="1.45:fade"><b>Action Plan</b><span data-t="mg.a.ap">View</span></p>
+                </div>
+                <div class="mg-cam mg-x" data-a="7.6:fade:.3 9.15:gone">
+                  <div class="mg-camf"><span class="mg-frame"></span><span class="mg-sbox"><span class="mg-scan" data-a="7.9:scanY:.8"></span></span></div>
+                  <p class="mg-k" data-t="mg.a.cam">Reading the 2D code</p>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="o mg-x" style="--x:216;--y:104;--w:240" data-a="0.45:fade 3.4:out">
+            <p class="mg-k" data-t="mg.a.lamps">Entered by your clinician</p>
+            <div class="mg-legend" style="margin-top:.6em">
+              <p class="mg-lrow" data-a="0.75:fromR"><i class="mg-lamp no" data-a="0.95:lamp"></i><span data-t="v.no">Contraindicated</span></p>
+              <p class="mg-lrow" data-a="0.9:fromR"><i class="mg-lamp care" data-a="1.1:lamp"></i><span data-t="v.care">Caution</span></p>
+              <p class="mg-lrow" data-a="1.05:fromR"><i class="mg-lamp ok" data-a="1.25:lamp"></i><span data-t="v.ok">OK to take</span></p>
+            </div>
+          </div>
+          <div class="o mg-x" style="--x:212;--y:70;--w:252" data-a="3.55:rise 7:out">
+            <div class="mg-search">
+              <span class="mg-sel" data-t="mg.a.by">Drug name</span>
+              <span class="mg-in"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg><span data-type="3.9" data-t="mg.a.q">Ibuprofen</span></span>
+              <span class="mg-go" data-a="4.5:press" data-t="mg.a.go">Search</span>
+            </div>
+          </div>
+          <div class="o mg-x" style="--x:212;--y:134;--w:252" data-a="5.25:pop 7:out">
+            <div class="mg-p mg-say">
+              <span class="mg-pill no"><i class="mg-dot no" data-a="5.4:lamp"></i><span data-t="v.no">Contraindicated</span></span>
+              <p data-t="mg.a.say">Your record lists it as contraindicated. Talk to the prescribing doctor before taking it.</p>
+            </div>
+          </div>
+          <div class="o" style="--x:220;--y:22;--w:240" data-a="7.05:fromR">
+            <div class="mg-p">
+              <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M183.31,188l22.35-22.34a8,8,0,0,0-11.32-11.32L172,176.69l-41.15-41.16A52,52,0,0,0,124,32H72a8,8,0,0,0-8,8V192a8,8,0,0,0,16,0V136h28.69l52,52-22.35,22.34a8,8,0,0,0,11.32,11.32L172,199.31l22.34,22.35a8,8,0,0,0,11.32-11.32ZM80,48h44a36,36,0,0,1,0,72H80Z"/></svg><span data-t="mg.a.rx">Prescription</span><span class="mg-k mg-end" data-t="mg.a.who">Fictional patient A</span></p>
+              <div class="mg-rx">
+                <p class="mg-rxl"><i>1</i><span data-t="mg.a.q">Ibuprofen</span><span class="mg-pill no" data-a="9.35:pop"><i class="mg-dot no" data-a="9.45:lamp"></i><span data-t="v.no">Contraindicated</span></span></p>
+                <p class="mg-rxl"><i>2</i><span data-t="mg.a.d2">Rebamipide</span><span></span></p>
+              </div>
+              <div class="mg-pdf"><span class="mg-frame" data-a="7.85:pop:.3"></span><span class="mg-sbox"><span class="mg-scan x" data-a="7.95:scanX:.9"></span></span></div>
+              <p class="mg-k" style="margin-top:.75em" data-t="mg.a.code">2D code</p>
+            </div>
+          </div>
+        </div></div>
+        <figcaption class="mg-ui">
+          <ol class="mg-cap"><li data-t="mg.a.cap1">Your allergy record, entered by your clinician, is in the app.</li><li data-t="mg.a.cap2">Search a drug name and the app answers contraindicated, caution or OK to take, based on your record.</li><li data-t="mg.a.cap3">Scan the 2D code at the bottom of a prescription to check every prescribed drug at once.</li></ol>
+          <div class="mg-ctl">
+            <button class="mg-btn" type="button" data-t-aria-label="mg.play" aria-label="Play" data-t-data-play="mg.play" data-play="Play" data-t-data-pause="mg.pause" data-pause="Pause" data-t-data-replay="mg.replay" data-replay="Replay"><svg class="i mg-i-play" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i mg-i-pause" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg><svg class="i mg-i-replay" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"/></svg></button>
+            <div class="mg-steps" role="group" data-t-aria-label="mg.steps" aria-label="Choose a scene"></div>
+            <p class="mg-note" data-t="mg.a.note">Only the screen marked “Real screen” is the 2018 app (demo record); the rest illustrates fictional patient A.</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
   </article>
 
   <article class="svc wide" id="svc-cdss" aria-labelledby="s3-h">
@@ -667,6 +971,72 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
           <li><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span data-t="s3.b3">For each medicine it explains in plain words why you take it, what to watch for, and which symptoms mean you should talk to your doctor.</span></li>
           <li><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span data-t="s3.b4">Guides are designed to reach the patient only after a clinician has reviewed and approved them.</span></li>
         </ul>
+        <figure class="mg" id="mg-cdss" data-lens="0:1.35:150:150 2.8:1.35:243:150 6.6:1.35:330:140 9.2:1:240:180" role="group" data-t-aria-label="mg.d.aria" aria-label="How the MyData medication guide is made, in four scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 2.8 6.6 9.2" data-len="12">
+          <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
+            <svg class="mg-beams" viewBox="0 0 480 360" preserveAspectRatio="none" focusable="false">
+              <path class="base" pathLength="1" d="M134 142 C 150 142, 146 146, 160 146" data-a="1.45:draw:.4"/>
+              <path class="base" pathLength="1" d="M134 176 C 150 176, 146 150, 160 150" data-a="1.55:draw:.4"/>
+              <path class="base" pathLength="1" d="M134 210 C 150 210, 146 154, 160 154" data-a="1.65:draw:.4"/>
+              <path class="pulse" pathLength="1" d="M134 142 C 150 142, 146 146, 160 146" data-a="1.6:beam:.6"/>
+              <path class="pulse" pathLength="1" d="M134 176 C 150 176, 146 150, 160 150" data-a="1.75:beam:.6"/>
+              <path class="pulse" pathLength="1" d="M134 210 C 150 210, 146 154, 160 154" data-a="1.9:beam:.6"/>
+              <path class="base" pathLength="1" d="M326 80 C 336 80, 336 80, 346 80" data-a="6.65:draw:.3"/>
+              <path class="pulse" pathLength="1" d="M326 80 C 336 80, 336 80, 346 80" data-a="6.75:beam:.5"/>
+              <path class="base" pathLength="1" d="M407 236 C 407 248, 407 252, 407 268" data-a="9.95:draw:.3"/>
+              <path class="pulse" pathLength="1" d="M407 236 C 407 248, 407 252, 407 268" data-a="10.05:beam:.6"/>
+            </svg>
+            <div class="o" style="--x:14;--y:24;--w:124" data-a="0.05:rise">
+              <div class="mg-p mg-node"><p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></svg><span data-t="mg.d.src">My Health Record</span></p><p class="mg-k mg-row"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-42.34-61.66a8,8,0,0,1,0,11.32l-24,24a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L120,164.69V120a8,8,0,0,1,16,0v44.69l10.34-10.35A8,8,0,0,1,157.66,154.34Z"/></svg><span data-t="mg.d.dl">Download</span></p></div>
+            </div>
+            <div class="o" style="--x:14;--y:128;--w:124">
+              <div class="mg-node" style="gap:.55em">
+                <p class="mg-box" data-a="0.55:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></svg><span data-t="mg.d.r1">Diagnoses</span></p>
+                <p class="mg-box" data-a="0.7:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M183.31,188l22.35-22.34a8,8,0,0,0-11.32-11.32L172,176.69l-41.15-41.16A52,52,0,0,0,124,32H72a8,8,0,0,0-8,8V192a8,8,0,0,0,16,0V136h28.69l52,52-22.35,22.34a8,8,0,0,0,11.32,11.32L172,199.31l22.34,22.35a8,8,0,0,0,11.32-11.32ZM80,48h44a36,36,0,0,1,0,72H80Z"/></svg><span data-t="mg.d.r2">Prescriptions</span></p>
+                <p class="mg-box" data-a="0.85:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"/></svg><span data-t="mg.d.r3">Test results</span></p>
+              </div>
+            </div>
+            <div class="o" style="--x:160;--y:24;--w:166">
+              <div class="mg-node" style="gap:.7em;justify-items:stretch">
+                <div class="mg-p" data-a="1.3:rise">
+                  <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg><span data-t="mg.d.chk">Rule checks</span></p>
+                  <div class="mg-ck">
+                    <div class="mg-ckr" data-a="2.9:wipe"><span data-t="mg.d.k1">Interactions</span><i class="mg-track"><b data-a="3.35:grow"></b></i><i class="mg-tick" data-a="3.9:pop:.35"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></i></div>
+                    <div class="mg-ckr" data-a="3.05:wipe"><span data-t="mg.d.k2">Older-adult cautions</span><i class="mg-track"><b data-a="3.9:grow"></b></i><i class="mg-tick" data-a="4.45:pop:.35"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></i></div>
+                    <div class="mg-ckr" data-a="3.2:wipe"><span data-t="mg.d.k3">Anticholinergic burden</span><i class="mg-track"><b data-a="4.45:grow"></b></i><i class="mg-tick" data-a="5:pop:.35"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></i></div>
+                    <div class="mg-ckr" data-a="3.35:wipe"><span data-t="mg.d.k4">STOPP/START v3</span><i class="mg-track"><b data-a="5:grow:.9"></b></i><i class="mg-tick" data-a="5.9:pop:.35"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></i><span class="mg-count"><span data-tick="5:.9:146">146</span><span data-t="mg.d.rules"> rule entries</span></span></div>
+                  </div>
+                </div>
+                <div class="mg-flag" data-a="6:pop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></svg><b data-t="mg.d.pair">Warfarin + ibuprofen</b><span data-t="ck.g4">Combinations to watch</span></div>
+              </div>
+            </div>
+            <div class="o" style="--x:346;--y:24;--w:122" data-a="6.9:rise">
+              <div class="mg-p">
+                <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.d.doc">Medication guide</span></p>
+                <p class="mg-ai" data-a="7.15:pop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg><span data-t="mg.d.ai">AI draft</span></p>
+                <div class="mg-lines" style="margin-top:.65em">
+                  <i class="mg-sk" style="--sw:94%" data-a="7.3:wipe"></i>
+                  <i class="mg-sk" style="--sw:78%" data-a="7.42:wipe"></i>
+                  <i class="mg-sk" style="--sw:86%" data-a="7.54:wipe"></i>
+                  <p class="mg-hi" data-a="7.8:wipe" data-t="ck.g4">Combinations to watch</p>
+                  <i class="mg-sk" style="--sw:90%" data-a="8.05:wipe"></i>
+                  <i class="mg-sk" style="--sw:64%" data-a="8.17:wipe"></i>
+                </div>
+              </div>
+            </div>
+            <div class="o" style="--x:342;--y:190;--w:126" data-over="ok" data-a="9.35:stamp"><span class="mg-stamp"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-11.55,39.29c-4.79,5-9.75,10.17-12.38,16.52-2.52,6.1-2.63,13.07-2.73,19.82-.1,7-.21,14.33-3.32,17.43s-10.39,3.22-17.43,3.32c-6.75.1-13.72.21-19.82,2.73-6.35,2.63-11.52,7.59-16.52,12.38S132,224,128,224s-9.15-4.92-14.11-9.69-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82-2.63-6.35-7.59-11.52-12.38-16.52S32,132,32,128s4.92-9.15,9.69-14.11,9.75-10.17,12.38-16.52c2.52-6.1,2.63-13.07,2.73-19.82.1-7,.21-14.33,3.32-17.43S70.51,56.9,77.55,56.8c6.75-.1,13.72-.21,19.82-2.73,6.35-2.63,11.52-7.59,16.52-12.38S124,32,128,32s9.15,4.92,14.11,9.69,10.17,9.75,16.52,12.38c6.1,2.52,13.07,2.63,19.82,2.73,7,.1,14.33.21,17.43,3.32s3.22,10.39,3.32,17.43c.1,6.75.21,13.72,2.73,19.82,2.63,6.35,7.59,11.52,12.38,16.52S224,124,224,128,219.08,137.15,214.31,142.11ZM173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg><span data-t="mg.d.ok">Clinician approved</span></span></div>
+            <div class="o" style="--x:346;--y:270;--w:122" data-a="9.75:pop">
+              <p class="mg-box"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></svg><span data-t="mg.d.pt">Patient app</span><span class="mg-done" data-a="10.7:pop:.35"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span></p>
+            </div>
+          </div></div>
+          <figcaption class="mg-ui">
+            <ol class="mg-cap"><li data-t="mg.d.cap1">It starts from the diagnoses, 12 months of prescriptions and test results downloaded from My Health Record.</li><li data-t="mg.d.cap2">Explicit rules first check interactions, older-adult cautions, anticholinergic burden and STOPP/START.</li><li data-t="mg.d.cap3">AI drafts a plain-language guide from those results.</li><li data-t="mg.d.cap4">The guide is designed to reach the patient only after a clinician reviews and approves it.</li></ol>
+            <div class="mg-ctl">
+              <button class="mg-btn" type="button" data-t-aria-label="mg.play" aria-label="Play" data-t-data-play="mg.play" data-play="Play" data-t-data-pause="mg.pause" data-pause="Pause" data-t-data-replay="mg.replay" data-replay="Replay"><svg class="i mg-i-play" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i mg-i-pause" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg><svg class="i mg-i-replay" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"/></svg></button>
+              <div class="mg-steps" role="group" data-t-aria-label="mg.steps" aria-label="Choose a scene"></div>
+              <p class="mg-note" data-t="mg.demo">Illustration with a fictional patient</p>
+            </div>
+          </figcaption>
+        </figure>
       </div>
       <div class="svc-text">
         <div class="doc checks">
@@ -715,6 +1085,7 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
   </article>
 
   <div class="yak" id="svc-app">
+    <div class="yak-l">
     <div class="yak-h">
       <p class="svc-k"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></svg><span data-t="yk.k">Yakirang · patient app</span></p>
       <h3 class="h3" data-t="yk.h">Your card and guides live in one app.</h3>
@@ -728,6 +1099,87 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
       <li><span class="ico"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></svg></span><span data-t="yk.f3">Personal medication guidance kept by date, and a weekly medication calendar</span></li>
       <li><span class="ico"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"/></svg></span><span data-t="yk.f4">A log of symptoms after taking a drug, with intensity from 1 to 10 and the day it started</span></li>
     </ul>
+    </div>
+    <figure class="mg" id="mg-yak" data-lens="0:1.35:150:150 3:1.35:150:150 4.6:1.3:336:110 6.2:1.35:150:150 8.4:1.3:336:156 9.6:1:240:180" role="group" data-t-aria-label="mg.y.aria" aria-label="How the Yakirang app keeps guidance, prescriptions and side-effect logs, in four scenes" data-t-data-step="mg.step" data-step="Scene" data-beats="0 3 6.2 9.2" data-len="11.6">
+      <div class="mg-canvas" aria-hidden="true"><div class="mg-s">
+        <div class="o h" style="--x:26;--y:16;--w:160;--h:328" data-a="0.05:rise">
+          <div class="mg-phone"><div class="mg-scr">
+            <p class="mg-app"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z"/></svg><span data-t="mg.y.app">Yakirang</span></p>
+            <div class="mg-scrs">
+              <div class="mg-scrn" data-a="3.1:swapOut 9.3:swapIn:.5:f">
+                <div class="mg-week" data-a="0.35:fade">
+                  <p class="mg-day"><span data-t="mg.y.d1">M</span><i><b data-a="9.95:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                  <p class="mg-day"><span data-t="mg.y.d2">T</span><i><b data-a="10.1:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                  <p class="mg-day"><span data-t="mg.y.d3">W</span><i><b data-a="10.25:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                  <p class="mg-day today"><span data-t="mg.y.d4">T</span><i><b data-a="10.4:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                  <p class="mg-day"><span data-t="mg.y.d5">F</span><i></i></p>
+                  <p class="mg-day"><span data-t="mg.y.d6">S</span><i></i></p>
+                  <p class="mg-day"><span data-t="mg.y.d7">S</span><i></i></p>
+                </div>
+                <p class="mg-hd" data-a="0.55:fade"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.y.gl">Medication guidance</span></p>
+                <div class="mg-fl1">
+                  <p class="mg-li" data-a="0.75:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.y.g1">Oct 15</span><i></i></p>
+                  <p class="mg-li" data-a="0.95:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.y.g2">Oct 8</span><i></i></p>
+                  <p class="mg-li" data-a="1.15:drop"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><span data-t="mg.y.g3">Oct 1</span><i></i></p>
+                </div>
+              </div>
+              <div class="mg-scrn mg-x" data-a="3.1:swapIn 6.3:swapOut">
+                <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M183.31,188l22.35-22.34a8,8,0,0,0-11.32-11.32L172,176.69l-41.15-41.16A52,52,0,0,0,124,32H72a8,8,0,0,0-8,8V192a8,8,0,0,0,16,0V136h28.69l52,52-22.35,22.34a8,8,0,0,0,11.32,11.32L172,199.31l22.34,22.35a8,8,0,0,0,11.32-11.32ZM80,48h44a36,36,0,0,1,0,72H80Z"/></svg><span data-t="mg.y.rx">Prescriptions</span></p>
+                <p class="mg-k" data-t="mg.y.hosp">○○ Hospital · Oct 12</p>
+                <div class="mg-drug" data-a="3.55:drop"><b data-t="mg.y.p1">Ibuprofen 200 mg</b><span data-t="mg.y.p1d">1 tablet · 3 times a day · 5 days</span></div>
+                <div class="mg-drug" data-a="3.7:drop"><b data-t="mg.y.p2">Acetaminophen 500 mg</b><span data-t="mg.y.p2d">1 tablet · 2 times a day · 5 days</span></div>
+                <span class="mg-btnx" data-a="3.95:fade 4.45:press" data-t="mg.y.q">Check flagged ingredients</span>
+              </div>
+              <div class="mg-scrn mg-x" data-a="6.3:swapIn 9.3:swapOut">
+                <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"/></svg><span data-t="mg.y.se">Side-effect log</span></p>
+                <div class="mg-field"><p class="mg-k" data-t="rec.b1.3">Symptoms</p><p class="mg-v" data-t="mg.y.sym">Dizziness</p></div>
+                <div class="mg-field"><p class="mg-k"><span data-t="mg.y.int">Intensity</span> <span class="mg-num"><span data-tick="6.9:.8:3">3</span>/10</span></p><span class="mg-sl"><b data-a="6.9:grow:.8"></b><i data-a="6.9:knob:.8"></i></span></div>
+                <div class="mg-field" data-a="7.85:wipe"><p class="mg-k" data-t="rec.b1.1">Onset date</p><p class="mg-v" data-t="mg.y.day">Day 2 on acetaminophen</p></div>
+                <span class="mg-btnx" data-a="8.3:press" data-t="mg.y.save">Save</span>
+              </div>
+            </div>
+            <p class="mg-tabs"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></svg><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg></p>
+          </div></div>
+        </div>
+        <div class="o" style="--x:206;--y:18;--w:260">
+          <div class="mg-node" style="gap:.65em;justify-items:stretch">
+            <div class="mg-p" data-a="4.75:drop">
+              <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></svg><span data-t="mg.y.t">Flagged ingredients</span></p>
+              <div class="mg-tb">
+              <span class="th" data-t="mg.y.th1">Type</span><span class="th"><span data-t="mg.y.th2">Ingredient</span> · <span data-t="mg.y.th3">Product</span></span>
+              <span class="mg-pill no" data-a="5.05:pop:.35"><i class="mg-dot no"></i><span data-t="v.no">Contraindicated</span></span><span class="mg-tbv"><b data-t="mg.a.q">Ibuprofen</b><span data-t="mg.y.p1">Ibuprofen 200 mg</span></span>
+              <span class="mg-pill care" data-a="5.2:pop:.35"><i class="mg-dot care"></i><span data-t="v.care">Caution</span></span><span class="mg-tbv"><b data-t="mg.a.care">Acetaminophen</b><span data-t="mg.y.p2">Acetaminophen 500 mg</span></span>
+            </div>
+            <p class="mg-k mg-ask" data-a="5.35:fade" data-t="mg.y.ask">Talk to the prescribing doctor before taking a contraindicated drug.</p>
+            </div>
+            <div class="mg-p" data-a="8.65:drop">
+              <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M72,144H32a8,8,0,0,1,0-16H67.72l13.62-20.44a8,8,0,0,1,13.32,0l25.34,38,9.34-14A8,8,0,0,1,136,128h24a8,8,0,0,1,0,16H140.28l-13.62,20.44a8,8,0,0,1-13.32,0L88,126.42l-9.34,14A8,8,0,0,1,72,144ZM178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,.75,0,1.5,0,2.25a8,8,0,1,0,16-.5c0-.58,0-1.17,0-1.75A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46c0,53.61-77.76,102.15-96,112.8-10.83-6.31-42.63-26-66.68-52.21a8,8,0,1,0-11.8,10.82c31.17,34,72.93,56.68,74.69,57.63a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40Z"/></svg><span data-t="mg.y.se">Side-effect log</span><span class="mg-done"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span></p>
+              <p class="mg-row mg-wrap"><b class="mg-v" data-t="mg.y.sym">Dizziness</b><span class="mg-pill care"><span data-t="mg.y.int">Intensity</span>&nbsp;3/10</span><span class="mg-k" data-t="mg.y.day">Day 2 on acetaminophen</span></p>
+            </div>
+            <div class="mg-p" data-a="10:drop">
+              <p class="mg-hd"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></svg><span data-t="mg.y.cal">Weekly medication calendar</span></p>
+              <div class="mg-week">
+                <p class="mg-day"><span data-t="mg.y.d1">M</span><i><b data-a="10.3:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                <p class="mg-day"><span data-t="mg.y.d2">T</span><i><b data-a="10.42:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                <p class="mg-day"><span data-t="mg.y.d3">W</span><i><b data-a="10.54:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                <p class="mg-day today"><span data-t="mg.y.d4">T</span><i><b data-a="10.66:pop:.3"><svg class="i" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></b></i></p>
+                <p class="mg-day"><span data-t="mg.y.d5">F</span><i></i></p>
+                <p class="mg-day"><span data-t="mg.y.d6">S</span><i></i></p>
+                <p class="mg-day"><span data-t="mg.y.d7">S</span><i></i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <figcaption class="mg-ui">
+        <ol class="mg-cap"><li data-t="mg.y.cap1">Your personal medication guidance collects in the app, by date.</li><li data-t="mg.y.cap2">Prescriptions show each drug’s dose and schedule, and flag any contraindicated or caution ingredients.</li><li data-t="mg.y.cap3">Symptoms after a dose are logged with intensity from 1 to 10 and the day they started.</li><li data-t="mg.y.cap4">A weekly calendar helps you keep track day by day.</li></ol>
+        <div class="mg-ctl">
+          <button class="mg-btn" type="button" data-t-aria-label="mg.play" aria-label="Play" data-t-data-play="mg.play" data-play="Play" data-t-data-pause="mg.pause" data-pause="Pause" data-t-data-replay="mg.replay" data-replay="Replay"><svg class="i mg-i-play" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></svg><svg class="i mg-i-pause" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></svg><svg class="i mg-i-replay" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"/></svg></button>
+          <div class="mg-steps" role="group" data-t-aria-label="mg.steps" aria-label="Choose a scene"></div>
+          <p class="mg-note" data-t="mg.demo">Illustration with a fictional patient</p>
+        </div>
+      </figcaption>
+    </figure>
   </div>
 </div></section>
 
@@ -1087,6 +1539,215 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
     nums.forEach(function (n) { armed.observe(n); run.observe(n); });
   }
 
+  /* motion graphics: one timeline per scene, built from data-a specs ("start:preset[:seconds[:fill]]") with the
+     Web Animations API. A scene plays once when it is on screen, pauses when it leaves, and shows its last frame
+     when motion is reduced; the play button and the scene buttons work in every case. */
+  var films = [], mgRelang = null;
+  (function () {
+    var figs = $$('.mg');
+    if (!figs.length || typeof KeyframeEffect === 'undefined' || !document.body.animate) return;
+    var HOUSE = 'cubic-bezier(.16,1,.3,1)', EIN = 'cubic-bezier(.7,0,.84,0)', OVER = 'cubic-bezier(.34,1.56,.64,1)', SWAY = 'cubic-bezier(.45,0,.55,1)';
+    var Y = function (v) { return 'translateY(' + v + 'cqw)'; }, X = function (v) { return 'translateX(' + v + 'cqw)'; };
+    var PRE = { /* keyframes, seconds, easing, fill */
+      rise: [[{ opacity: 0, transform: Y(2.4) }, { opacity: 1, transform: 'none' }], .55, HOUSE, 'both'],
+      pop: [[{ opacity: 0, transform: 'scale(.88)' }, { opacity: 1, transform: 'none' }], .45, HOUSE, 'both'],
+      drop: [[{ opacity: 0, transform: Y(-1.4) + ' scale(.96)' }, { opacity: 1, transform: 'none' }], .45, HOUSE, 'both'],
+      fade: [[{ opacity: 0 }, { opacity: 1 }], .4, 'ease-out', 'both'],
+      fromR: [[{ opacity: 0, transform: X(5) }, { opacity: 1, transform: 'none' }], .55, HOUSE, 'both'],
+      wipe: [[{ opacity: 1, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)' }], .45, HOUSE, 'both'],
+      wipeY: [[{ opacity: 1, clipPath: 'inset(0 0 100% 0)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)' }], .6, 'steps(8, end)', 'both'],
+      grow: [[{ opacity: 1, transform: 'scaleX(0)' }, { opacity: 1, transform: 'none' }], .55, HOUSE, 'both'],
+      knob: [[{ transform: 'translateX(-2.52em)' }, { transform: 'none' }], .55, HOUSE, 'both'],
+      stamp: [[{ opacity: 0, transform: 'scale(1.5)' }, { opacity: 1, offset: .35 }, { opacity: 1, transform: 'none' }], .4, OVER, 'both'],
+      lamp: [[{ opacity: .25, transform: 'scale(.55)' }, { opacity: 1, transform: 'none' }], .2, 'ease-out', 'both'],
+      press: [[{ transform: 'none' }, { transform: 'scale(.9)', offset: .35 }, { transform: 'none' }], .3, 'ease-out', 'none'],
+      scanY: [[{ opacity: 1, transform: 'translateY(-4%)' }, { opacity: 1, transform: 'translateY(100%)' }], .8, SWAY, 'none'],
+      scanX: [[{ opacity: 1, transform: 'translateX(-2%)' }, { opacity: 1, transform: 'translateX(100%)' }], .9, SWAY, 'none'],
+      draw: [[{ opacity: 1, strokeDashoffset: 1.02 }, { opacity: 1, strokeDashoffset: 0 }], .45, HOUSE, 'both'],
+      beam: [[{ strokeDashoffset: .24 }, { strokeDashoffset: -1.06 }], .7, SWAY, 'none'],
+      swapIn: [[{ opacity: 1, transform: 'translateX(100%)' }, { opacity: 1, transform: 'none' }], .5, HOUSE, 'both'],
+      swapOut: [[{ transform: 'none' }, { transform: 'translateX(-100%)' }], .5, HOUSE, 'forwards'],
+      out: [[{ opacity: 1, transform: 'none' }, { opacity: 0, transform: Y(-1) }], .25, EIN, 'forwards'],
+      gone: [[{ opacity: 1 }, { opacity: 0 }], .25, EIN, 'forwards']
+    };
+    var FILL = { b: 'both', f: 'forwards', n: 'none' };
+    var esc = function (w) { return w.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    function Film(fig) {
+      var self = this;
+      this.fig = fig;
+      this.len = +fig.getAttribute('data-len');
+      this.beats = fig.getAttribute('data-beats').trim().split(/\s+/).map(Number);
+      this.btn = fig.querySelector('.mg-btn');
+      this.caps = $$('.mg-cap > li', fig);
+      this.anims = []; this.ticks = []; this.clock = null; this.built = false; this.state = 'idle'; this.user = false;
+      var box = fig.querySelector('.mg-steps');
+      this.stepBtns = this.beats.map(function (b, k) {
+        var s = document.createElement('button');
+        s.type = 'button'; s.className = 'mg-step';
+        s.style.setProperty('--g', ((self.beats[k + 1] || self.len) - b).toFixed(2));
+        s.appendChild(document.createElement('i'));
+        s.addEventListener('click', function () { self.jump(k); });
+        box.appendChild(s);
+        return s;
+      });
+      this.btn.addEventListener('click', function () { self.toggle(); });
+      fig.classList.add('mg-on');
+      this.label();
+      fig.__film = this;
+    }
+    Film.prototype.label = function () {
+      var self = this, w = this.fig.getAttribute('data-step') || '';
+      this.stepBtns.forEach(function (s, k) { s.setAttribute('aria-label', w + ' ' + (k + 1) + ': ' + (self.caps[k].querySelector('.vh') || self.caps[k]).textContent.trim()); });
+      this.setBtn();
+    };
+    Film.prototype.setBtn = function () {
+      var st = this.state === 'playing' ? 'playing' : this.state === 'ended' ? 'ended' : 'paused';
+      this.fig.classList.toggle('mg-list', calm() && this.state !== 'playing');
+      this.btn.setAttribute('data-state', st);
+      this.btn.setAttribute('aria-label', this.btn.getAttribute(st === 'playing' ? 'data-pause' : st === 'ended' ? 'data-replay' : 'data-play') || '');
+    };
+    Film.prototype.add = function (el, kf, t, d, ease, fill) {
+      if (t + d > this.len) d = Math.max(.01, this.len - t); /* a move never runs past the end of its scene */
+      var a = el.animate(kf, { delay: t * 1000, duration: d * 1000, endDelay: Math.max(0, this.len - t - d) * 1000, easing: ease, fill: fill });
+      if (a.persist) a.persist(); /* a finished move that a later one covers would otherwise be dropped, and replay would show gaps */
+      a.pause();
+      this.anims.push(a);
+    };
+    Film.prototype.build = function () {
+      var self = this, fig = this.fig;
+      this.caps.forEach(function (li, k) { /* captions: words rise in at half overlap, the line leaves when the next scene starts */
+        var t0 = self.beats[k], t1 = self.beats[k + 1], text = (li.querySelector('.vh') || li).textContent.trim(), words = text.split(/\s+/);
+        var step = Math.min(.2, Math.max(.05, ((t1 || self.len) - t0 - 1.2) / words.length));
+        li.innerHTML = '<span class="vh">' + esc(text) + '</span><span aria-hidden="true">' + words.map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ') + '</span>';
+        $$('.w', li).forEach(function (w, i) { self.add(w, [{ opacity: 0, transform: 'translateY(.4em)' }, { opacity: 1, transform: 'none' }], t0 + .08 + i * step, 2 * step, HOUSE, 'both'); });
+        if (t1 !== undefined) self.add(li, [{ opacity: 1 }, { opacity: 0 }], t1 - .02, .22, EIN, 'forwards');
+      });
+      $$('[data-a]', fig).forEach(function (el) {
+        el.getAttribute('data-a').trim().split(/\s+/).forEach(function (spec) {
+          var p = spec.split(':'), pr = PRE[p[1]];
+          if (pr) self.add(el, pr[0], +p[0], p[2] ? +p[2] : pr[1], pr[2], FILL[p[3]] || pr[3]);
+        });
+      });
+      $$('[data-type]', fig).forEach(function (el) {
+        var chars = Array.from(el.textContent), t = +el.getAttribute('data-type'), step = Math.min(.09, .45 / Math.max(1, chars.length));
+        el.innerHTML = chars.map(function (c) { return '<span class="c">' + esc(c) + '</span>'; }).join('');
+        $$('.c', el).forEach(function (c, i) { self.add(c, [{ opacity: 0 }, { opacity: 1 }], t + i * step, .01, 'linear', 'both'); });
+      });
+      this.ticks = $$('[data-tick]', fig).map(function (el) { var p = el.getAttribute('data-tick').split(':'); return { el: el, t: +p[0], d: +p[1], to: +p[2] }; });
+      /* on a narrow screen a camera moves in on each part of the scene so the small type stays readable,
+         then pulls back to the whole picture for the last part */
+      var lens = fig.getAttribute('data-lens'), L = this.len;
+      this.narrow = fig.querySelector('.mg-canvas').clientWidth < 520;
+      if (lens && this.narrow) {
+        var cam = function (z, fx, fy) {
+          var tx = Math.min(0, Math.max(480 * (1 - z), 240 - z * fx)), ty = Math.min(0, Math.max(360 * (1 - z), 180 - z * fy));
+          return 'translate(' + (tx / 4.8).toFixed(3) + 'cqw,' + (ty / 4.8).toFixed(3) + 'cqw) scale(' + z + ')';
+        };
+        var pts = lens.trim().split(/\s+/).map(function (x) { var q = x.split(':').map(Number); return { t: q[0], v: cam(q[1], q[2], q[3]) }; });
+        var kf = [{ offset: 0, transform: pts[0].v, easing: 'linear' }];
+        for (var i = 1; i < pts.length; i++) {
+          kf.push({ offset: Math.min(1, pts[i].t / L), transform: pts[i - 1].v, easing: HOUSE });
+          kf.push({ offset: Math.min(1, (pts[i].t + .7) / L), transform: pts[i].v, easing: 'linear' });
+        }
+        kf.push({ offset: 1, transform: pts[pts.length - 1].v });
+        this.add(fig.querySelector('.mg-s'), kf, 0, L, 'linear', 'both');
+      }
+      this.clock = new Animation(new KeyframeEffect(null, null, { duration: this.len * 1000 }), document.timeline);
+      this.clock.pause();
+      this.clock.onfinish = function () { self.state = 'ended'; self.paint(self.len); self.setBtn(); };
+      this.built = true;
+    };
+    Film.prototype.all = function () { return this.anims.concat(this.clock ? [this.clock] : []); };
+    Film.prototype.time = function () { return this.clock ? (this.clock.currentTime || 0) / 1000 : 0; };
+    Film.prototype.seek = function (t) {
+      if (!this.built) this.build();
+      var ms = Math.max(0, Math.min(this.len, t)) * 1000;
+      this.all().forEach(function (a) { a.pause(); a.currentTime = ms; });
+      this.paint(ms / 1000);
+    };
+    Film.prototype.paint = function (t) { /* counters and the scene bar follow the same clock */
+      var self = this, cur = 0;
+      this.ticks.forEach(function (k) { var p = Math.min(1, Math.max(0, (t - k.t) / k.d)); k.el.textContent = String(Math.round(k.to * (1 - Math.pow(1 - p, 4)))); });
+      this.stepBtns.forEach(function (s, k) {
+        var b0 = self.beats[k], b1 = self.beats[k + 1] || self.len;
+        s.firstChild.style.transform = 'scaleX(' + Math.min(1, Math.max(0, (t - b0) / (b1 - b0))).toFixed(3) + ')';
+        if (t >= b0 - .001) cur = k;
+      });
+      this.stepBtns.forEach(function (s, k) { if (k === cur) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current'); });
+      this.caps.forEach(function (li, k) { li.classList.toggle('on', k === cur); });
+    };
+    Film.prototype.play = function () {
+      if (!this.built) this.build();
+      var ms = this.time() * 1000;
+      if (ms >= this.len * 1000 - 1) { this.seek(0); ms = 0; }
+      var start = document.timeline.currentTime - ms;
+      this.all().forEach(function (a) { a.play(); a.startTime = start; });
+      this.state = 'playing'; this.setBtn(); loop();
+    };
+    Film.prototype.pause = function () {
+      var ms = this.clock.currentTime || 0;
+      this.all().forEach(function (a) { a.pause(); a.currentTime = ms; });
+      this.state = 'paused'; this.setBtn(); this.paint(ms / 1000);
+    };
+    Film.prototype.still = function () { this.seek(this.len); this.state = 'still'; this.setBtn(); }; /* last frame, play from the start on request */
+    Film.prototype.toggle = function () {
+      if (this.state === 'playing') { this.user = true; this.pause(); return; }
+      this.user = false;
+      if (this.state === 'ended' || this.state === 'still') this.seek(0);
+      this.play();
+    };
+    Film.prototype.jump = function (k) {
+      var last = k === this.beats.length - 1, b0 = this.beats[k], b1 = this.beats[k + 1] || this.len;
+      if (this.state === 'playing') { this.seek(b0); this.play(); return; }
+      this.user = true;
+      this.seek(last ? this.len : b1 - .05);
+      this.state = last ? 'ended' : 'paused'; this.setBtn();
+    };
+    var raf = 0;
+    function loop() { if (!raf) raf = requestAnimationFrame(frame); }
+    function frame() {
+      raf = 0;
+      var any = false;
+      films.forEach(function (f) { if (f.state === 'playing') { any = true; f.paint(f.time()); } });
+      if (any) loop();
+    }
+    figs.forEach(function (fig) { films.push(new Film(fig)); });
+    function ready(f) { if (f.built) return; if (calm()) f.still(); else f.seek(0); }
+    if (hasIO) {
+      var near = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting) { near.unobserve(e.target); ready(e.target.__film); } }); }, { rootMargin: '60% 0px' });
+      var seen = new IntersectionObserver(function (en) {
+        en.forEach(function (e) {
+          var f = e.target.__film, r = e.intersectionRatio;
+          f.ratio = r;
+          if (r >= .4) { ready(f); if (!calm() && !f.user && !document.hidden && (f.state === 'idle' || f.state === 'paused')) f.play(); }
+          else if (r < .12 && f.state === 'playing') f.pause();
+        });
+      }, { threshold: [0, .12, .4, .7] });
+      films.forEach(function (f) { near.observe(f.fig); seen.observe(f.fig); });
+    } else films.forEach(function (f) { f.still(); });
+    if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (calm()) films.forEach(function (f) { f.user = false; f.still(); }); });
+    document.addEventListener('visibilitychange', function () {
+      films.forEach(function (f) {
+        if (document.hidden) { if (f.state === 'playing') { f.pause(); f.away = true; } }
+        else if (f.away) { f.away = false; if (!f.user && f.ratio >= .4) f.play(); }
+      });
+    });
+    function rebuild(f) { /* same moment, new captions or a new camera */
+      if (!f.built) return;
+      var t = f.time(), st = f.state;
+      f.all().forEach(function (a) { a.cancel(); });
+      f.anims = []; f.clock = null; f.built = false;
+      f.build(); f.seek(t); f.state = st;
+      if (st === 'playing') f.play(); else f.setBtn();
+    }
+    mgRelang = function () { films.forEach(function (f) { rebuild(f); f.label(); }); }; /* the in-place language switch replaced the captions */
+    var rs = 0;
+    window.addEventListener('resize', function () {
+      clearTimeout(rs);
+      rs = setTimeout(function () { films.forEach(function (f) { if (f.built && f.narrow !== (f.fig.querySelector('.mg-canvas').clientWidth < 520)) rebuild(f); }); }, 200);
+    });
+  })();
+
   /* menu on narrow screens */
   var menu = document.getElementById('menu'), menuBtn = document.getElementById('menu-btn');
   var behind = [document.querySelector('.skip'), topbar, document.getElementById('main'), document.querySelector('.foot'), totop];
@@ -1149,6 +1810,7 @@ html[lang="en"] .hero h1{font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em}
     $$('[data-href-ko]').forEach(function (e) { e.setAttribute('href', e.getAttribute('data-href-' + l)); });
     ['lang-switch', 'lang-switch-m'].forEach(function (id) { var sw = document.getElementById(id), other = l === 'en' ? 'ko' : 'en'; sw.setAttribute('lang', other); sw.setAttribute('hreflang', other); });
     render();
+    if (mgRelang) mgRelang();
     try { localStorage.setItem('ds-lang', l); } catch (e) {}
   }
   if (I18N) {
